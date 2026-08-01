@@ -1,3 +1,5 @@
+#include "invoker.h"
+
 static void WAIT(int ms) { invoke<Void>(0x2224A20, ms); }
 static int START_NEW_SCRIPT(const char* scriptName, int stackSize) { return invoke<int>(0x2224D50, scriptName, stackSize); }
 static int START_NEW_SCRIPT_WITH_ARGS(const char* scriptName, Any* args, int argCount, int stackSize) { return invoke<int>(0x2224F20, scriptName, args, argCount, stackSize); }
@@ -340,8 +342,8 @@ static void SET_CAM_ACTIVE(Cam cam, BOOL active) { invoke<Void>(0xD91450, cam, a
 static BOOL IS_CAM_ACTIVE(Cam cam) { return invoke<BOOL>(0xD91470, cam); }
 static BOOL IS_CAM_RENDERING(Cam cam) { return invoke<BOOL>(0xD914D0, cam); }
 static Cam GET_RENDERING_CAM() { return invoke<Cam>(0xD91550); }
-static vector3 GET_CAM_COORD(Cam cam) { return invoke<vector3>(0xD915A0, cam); }
-static vector3 GET_CAM_ROT(Cam cam, int rotationOrder) { return invoke<vector3>(0xD91660, cam, rotationOrder); }
+static Vector3 GET_CAM_COORD(Cam cam) { return invoke<Vector3>(0xD915A0, cam); }
+static Vector3 GET_CAM_ROT(Cam cam, int rotationOrder) { return invoke<Vector3>(0xD91660, cam, rotationOrder); }
 static float GET_CAM_FOV(Cam cam) { return invoke<float>(0xD91760, cam); }
 static float GET_CAM_NEAR_CLIP(Cam cam) { return invoke<float>(0xD917E0, cam); }
 static float GET_CAM_FAR_CLIP(Cam cam) { return invoke<float>(0xD91860, cam); }
@@ -434,8 +436,8 @@ static void DO_SCREEN_FADE_IN(int duration) { invoke<Void>(0xD94070, duration); 
 static void DO_SCREEN_FADE_OUT(int duration) { invoke<Void>(0xD94080, duration); }
 static void SET_WIDESCREEN_BORDERS(BOOL p0, int p1) { invoke<Void>(0xD94090, p0, p1); }
 static BOOL ARE_WIDESCREEN_BORDERS_ACTIVE() { return invoke<BOOL>(0xD940B0); }
-static vector3 GET_GAMEPLAY_CAM_COORD() { return invoke<vector3>(0xD940D0); }
-static vector3 GET_GAMEPLAY_CAM_ROT(int rotationOrder) { return invoke<vector3>(0xD94110, rotationOrder); }
+static Vector3 GET_GAMEPLAY_CAM_COORD() { return invoke<Vector3>(0xD940D0); }
+static Vector3 GET_GAMEPLAY_CAM_ROT(int rotationOrder) { return invoke<Vector3>(0xD94110, rotationOrder); }
 static float GET_GAMEPLAY_CAM_FOV() { return invoke<float>(0xD941B0); }
 static void SET_GAMEPLAY_CAM_MOTION_BLUR_SCALING_THIS_UPDATE(float p0) { invoke<Void>(0xD941E0, p0); }
 static void SET_GAMEPLAY_CAM_MAX_MOTION_BLUR_STRENGTH_THIS_UPDATE(float p0) { invoke<Void>(0xD94220, p0); }
@@ -509,9 +511,9 @@ static void SET_FIRST_PERSON_AIM_CAM_NEAR_CLIP_THIS_UPDATE(float p0) { invoke<Vo
 static void SET_THIRD_PERSON_AIM_CAM_NEAR_CLIP_THIS_UPDATE(float p0) { invoke<Void>(0xD95480, p0); }
 static void SET_ALLOW_CUSTOM_VEHICLE_DRIVE_BY_CAM_THIS_UPDATE(BOOL p0) { invoke<Void>(0xD954C0, p0); }
 static void FORCE_TIGHTSPACE_CUSTOM_FRAMING_THIS_UPDATE() { invoke<Void>(0xD954F0); }
-static vector3 GET_FINAL_RENDERED_CAM_COORD() { return invoke<vector3>(0xD95510); }
-static vector3 GET_FINAL_RENDERED_CAM_ROT(int rotationOrder) { return invoke<vector3>(0xD95550, rotationOrder); }
-static vector3 GET_FINAL_RENDERED_REMOTE_PLAYER_CAM_ROT(Player player, int rotationOrder) { return invoke<vector3>(0xD955E0, player, rotationOrder); }
+static Vector3 GET_FINAL_RENDERED_CAM_COORD() { return invoke<Vector3>(0xD95510); }
+static Vector3 GET_FINAL_RENDERED_CAM_ROT(int rotationOrder) { return invoke<Vector3>(0xD95550, rotationOrder); }
+static Vector3 GET_FINAL_RENDERED_REMOTE_PLAYER_CAM_ROT(Player player, int rotationOrder) { return invoke<Vector3>(0xD955E0, player, rotationOrder); }
 static float GET_FINAL_RENDERED_CAM_FOV() { return invoke<float>(0xD956E0); }
 static float GET_FINAL_RENDERED_REMOTE_PLAYER_CAM_FOV(Player player) { return invoke<float>(0xD95700, player); }
 static float GET_FINAL_RENDERED_CAM_NEAR_CLIP() { return invoke<float>(0xD95750); }
@@ -679,7 +681,7 @@ static BOOL DATADICT_GET_BOOL(Any* objectData, const char* key) { return invoke<
 static int DATADICT_GET_INT(Any* objectData, const char* key) { return invoke<int>(0xD9E710, objectData, key); }
 static float DATADICT_GET_FLOAT(Any* objectData, const char* key) { return invoke<float>(0xD9E7B0, objectData, key); }
 static const char* DATADICT_GET_STRING(Any* objectData, const char* key) { return invoke<const char*>(0xD9E870, objectData, key); }
-static vector3 DATADICT_GET_VECTOR(Any* objectData, const char* key) { return invoke<vector3>(0xD9E920, objectData, key); }
+static Vector3 DATADICT_GET_VECTOR(Any* objectData, const char* key) { return invoke<Vector3>(0xD9E920, objectData, key); }
 static Any* DATADICT_GET_DICT(Any* objectData, const char* key) { return invoke<Any*>(0xD9E9F0, objectData, key); }
 static Any* DATADICT_GET_ARRAY(Any* objectData, const char* key) { return invoke<Any*>(0xD9EA90, objectData, key); }
 static int DATADICT_GET_TYPE(Any* objectData, const char* key) { return invoke<int>(0xD9EB30, objectData, key); }
@@ -693,7 +695,7 @@ static BOOL DATAARRAY_GET_BOOL(Any* arrayData, int arrayIndex) { return invoke<B
 static int DATAARRAY_GET_INT(Any* arrayData, int arrayIndex) { return invoke<int>(0xD9ED20, arrayData, arrayIndex); }
 static float DATAARRAY_GET_FLOAT(Any* arrayData, int arrayIndex) { return invoke<float>(0xD9ED80, arrayData, arrayIndex); }
 static const char* DATAARRAY_GET_STRING(Any* arrayData, int arrayIndex) { return invoke<const char*>(0xD9EDF0, arrayData, arrayIndex); }
-static vector3 DATAARRAY_GET_VECTOR(Any* arrayData, int arrayIndex) { return invoke<vector3>(0xD9EE60, arrayData, arrayIndex); }
+static Vector3 DATAARRAY_GET_VECTOR(Any* arrayData, int arrayIndex) { return invoke<Vector3>(0xD9EE60, arrayData, arrayIndex); }
 static Any* DATAARRAY_GET_DICT(Any* arrayData, int arrayIndex) { return invoke<Any*>(0xD9EEE0, arrayData, arrayIndex); }
 static int DATAARRAY_GET_COUNT(Any* arrayData) { return invoke<int>(0xD9EF40, arrayData); }
 static int DATAARRAY_GET_TYPE(Any* arrayData, int arrayIndex) { return invoke<int>(0xD9EF60, arrayData, arrayIndex); }
@@ -737,14 +739,14 @@ static BOOL HAS_ENTITY_CLEAR_LOS_TO_ENTITY_IN_FRONT(Entity entity1, Entity entit
 static BOOL HAS_ENTITY_COLLIDED_WITH_ANYTHING(Entity entity) { return invoke<BOOL>(0xDB2730, entity); }
 static Entity _GET_LAST_ENTITY_HIT_BY_ENTITY(Entity entity) { return invoke<Entity>(0xDB27B0, entity); }
 static Hash GET_LAST_MATERIAL_HIT_BY_ENTITY(Entity entity) { return invoke<Hash>(0xDB2840, entity); }
-static vector3 GET_COLLISION_NORMAL_OF_LAST_HIT_FOR_ENTITY(Entity entity) { return invoke<vector3>(0xDB2920, entity); }
+static Vector3 GET_COLLISION_NORMAL_OF_LAST_HIT_FOR_ENTITY(Entity entity) { return invoke<Vector3>(0xDB2920, entity); }
 static void FORCE_ENTITY_AI_AND_ANIMATION_UPDATE(Entity entity) { invoke<Void>(0xDB2A20, entity); }
 static float GET_ENTITY_ANIM_CURRENT_TIME(Entity entity, const char* animDict, const char* animName) { return invoke<float>(0xDB2A90, entity, animDict, animName); }
 static float GET_ENTITY_ANIM_TOTAL_TIME(Entity entity, const char* animDict, const char* animName) { return invoke<float>(0xDB2AC0, entity, animDict, animName); }
 static float GET_ANIM_DURATION(const char* animDict, const char* animName) { return invoke<float>(0xDB2AF0, animDict, animName); }
 static Entity GET_ENTITY_ATTACHED_TO(Entity entity) { return invoke<Entity>(0xDB2B30, entity); }
-static vector3 GET_ENTITY_COORDS(Entity entity, BOOL alive) { return invoke<vector3>(0xDB2BC0, entity, alive); }
-static vector3 GET_ENTITY_FORWARD_VECTOR(Entity entity) { return invoke<vector3>(0xDB2C70, entity); }
+static Vector3 GET_ENTITY_COORDS(Entity entity, BOOL alive) { return invoke<Vector3>(0xDB2BC0, entity, alive); }
+static Vector3 GET_ENTITY_FORWARD_VECTOR(Entity entity) { return invoke<Vector3>(0xDB2C70, entity); }
 static float GET_ENTITY_FORWARD_X(Entity entity) { return invoke<float>(0xDB2D10, entity); }
 static float GET_ENTITY_FORWARD_Y(Entity entity) { return invoke<float>(0xDB2D80, entity); }
 static float GET_ENTITY_HEADING(Entity entity) { return invoke<float>(0xDB2DF0, entity); }
@@ -754,24 +756,24 @@ static int GET_ENTITY_MAX_HEALTH(Entity entity) { return invoke<int>(0xDB3060, e
 static void SET_ENTITY_MAX_HEALTH(Entity entity, int value) { invoke<Void>(0xDB30B0, entity, value); }
 static float GET_ENTITY_HEIGHT(Entity entity, float X, float Y, float Z, BOOL atTop, BOOL inWorldCoords) { return invoke<float>(0xDB3120, entity, X, Y, Z, atTop, inWorldCoords); }
 static float GET_ENTITY_HEIGHT_ABOVE_GROUND(Entity entity) { return invoke<float>(0xDB3120, entity); }
-static void GET_ENTITY_MATRIX(Entity entity, vector3* forwardVector, vector3* rightVector, vector3* upVector, vector3* position) { invoke<Void>(0xDB31E0, entity, forwardVector, rightVector, upVector, position); }
+static void GET_ENTITY_MATRIX(Entity entity, Vector3* forwardVector, Vector3* rightVector, Vector3* upVector, Vector3* position) { invoke<Void>(0xDB31E0, entity, forwardVector, rightVector, upVector, position); }
 static Hash GET_ENTITY_MODEL(Entity entity) { return invoke<Hash>(0xDB3330, entity); }
-static vector3 GET_OFFSET_FROM_ENTITY_GIVEN_WORLD_COORDS(Entity entity, float posX, float posY, float posZ) { return invoke<vector3>(0xDB3350, entity, posX, posY, posZ); }
-static vector3 GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Entity entity, vector3 xyz) { return invoke<vector3>(0xDB3470, entity, xyz); }
+static Vector3 GET_OFFSET_FROM_ENTITY_GIVEN_WORLD_COORDS(Entity entity, float posX, float posY, float posZ) { return invoke<Vector3>(0xDB3350, entity, posX, posY, posZ); }
+static Vector3 GET_OFFSET_FROM_ENTITY_IN_WORLD_COORDS(Entity entity, Vector3 xyz) { return invoke<Vector3>(0xDB3470, entity, xyz); }
 static float GET_ENTITY_PITCH(Entity entity) { return invoke<float>(0xDB3530, entity); }
 static void GET_ENTITY_QUATERNION(Entity entity, float* x, float* y, float* z, float* w) { invoke<Void>(0xDB3560, entity, x, y, z, w); }
 static float GET_ENTITY_ROLL(Entity entity) { return invoke<float>(0xDB36A0, entity); }
-static vector3 GET_ENTITY_ROTATION(Entity entity, int rotationOrder) { return invoke<vector3>(0xDB36D0, entity, rotationOrder); }
-static vector3 GET_ENTITY_ROTATION_VELOCITY(Entity entity) { return invoke<vector3>(0xDB36D0, entity); }
+static Vector3 GET_ENTITY_ROTATION(Entity entity, int rotationOrder) { return invoke<Vector3>(0xDB36D0, entity, rotationOrder); }
+static Vector3 GET_ENTITY_ROTATION_VELOCITY(Entity entity) { return invoke<Vector3>(0xDB36D0, entity); }
 static const char* GET_ENTITY_SCRIPT(Entity entity, ScrHandle* script) { return invoke<const char*>(0xDB3920, entity, script); }
 static float GET_ENTITY_SPEED(Entity entity) { return invoke<float>(0xDB3980, entity); }
-static vector3 GET_ENTITY_SPEED_VECTOR(Entity entity, BOOL relative) { return invoke<vector3>(0xDB3980, entity, relative); }
+static Vector3 GET_ENTITY_SPEED_VECTOR(Entity entity, BOOL relative) { return invoke<Vector3>(0xDB3980, entity, relative); }
 static float GET_ENTITY_UPRIGHT_VALUE(Entity entity) { return invoke<float>(0xDB3B70, entity); }
-static vector3 GET_ENTITY_VELOCITY(Entity entity) { return invoke<vector3>(0xDB3BC0, entity); }
+static Vector3 GET_ENTITY_VELOCITY(Entity entity) { return invoke<Vector3>(0xDB3BC0, entity); }
 static Object GET_OBJECT_INDEX_FROM_ENTITY_INDEX(Entity entity) { return invoke<Object>(0xDB3C90, entity); }
 static Ped GET_PED_INDEX_FROM_ENTITY_INDEX(Entity entity) { return invoke<Ped>(0xDB3CA0, entity); }
 static Vehicle GET_VEHICLE_INDEX_FROM_ENTITY_INDEX(Entity entity) { return invoke<Vehicle>(0xDB3CB0, entity); }
-static vector3 GET_WORLD_POSITION_OF_ENTITY_BONE(Entity entity, int boneIndex) { return invoke<vector3>(0xDB3CC0, entity, boneIndex); }
+static Vector3 GET_WORLD_POSITION_OF_ENTITY_BONE(Entity entity, int boneIndex) { return invoke<Vector3>(0xDB3CC0, entity, boneIndex); }
 static Player GET_NEAREST_PLAYER_TO_ENTITY(Entity entity) { return invoke<Player>(0xDB3D30, entity); }
 static Player GET_NEAREST_PLAYER_TO_ENTITY_ON_TEAM(Entity entity, int team) { return invoke<Player>(0xDB3D30, entity, team); }
 static int GET_ENTITY_TYPE(Entity entity) { return invoke<int>(0xDB3DD0, entity); }
@@ -810,7 +812,7 @@ static BOOL WOULD_ENTITY_BE_OCCLUDED(Hash entityModelHash, float x, float y, flo
 static BOOL IS_ENTITY_WAITING_FOR_WORLD_COLLISION(Entity entity) { return invoke<BOOL>(0xDB4AD0, entity); }
 static void APPLY_FORCE_TO_ENTITY_CENTER_OF_MASS(Entity entity, int forceType, float x, float y, float z, BOOL p5, BOOL isDirectionRel, BOOL isForceRel, BOOL p8) { invoke<Void>(0xDB4BA0, entity, forceType, x, y, z, p5, isDirectionRel, isForceRel, p8); }
 static void APPLY_FORCE_TO_ENTITY(Entity entity, int forceFlags, float x, float y, float z, float offX, float offY, float offZ, int boneIndex, BOOL isDirectionRel, BOOL ignoreUpVec, BOOL isForceRel, BOOL p12, BOOL p13) { invoke<Void>(0xDB4C40, entity, forceFlags, x, y, z, offX, offY, offZ, boneIndex, isDirectionRel, ignoreUpVec, isForceRel, p12, p13); }
-static void ATTACH_ENTITY_TO_ENTITY(Entity entity1, Entity entity2, int boneIndex, float xPos, float yPos, float zPos, float xRot, float yRot, float zRot, BOOL p9, BOOL useSoftPinning, BOOL collision, BOOL isPed, int vertexIndex, BOOL fixedRot, Any p15) { invoke<Void>(0xDB4CC0, entity1, entity2, boneIndex, xPos, yPos, zPos, xRot, yRot, zRot, p9, useSoftPinning, collision, isPed, vertexIndex, fixedRot, p15); }
+static void ATTACH_ENTITY_TO_ENTITY(Entity entity1, Entity entity2, int boneIndex, float xPos, float yPos, float zPos, float xRot, float yRot, float zRot, BOOL p9, BOOL useSoftPinning, BOOL collision, BOOL isPed, int vertexIndex, BOOL fixedRot) { invoke<Void>(0xDB4CC0, entity1, entity2, boneIndex, xPos, yPos, zPos, xRot, yRot, zRot, p9, useSoftPinning, collision, isPed, vertexIndex, fixedRot); }
 static void ATTACH_ENTITY_BONE_TO_ENTITY_BONE(Entity entity1, Entity entity2, int boneIndex1, int boneIndex2, BOOL p4, BOOL p5) { invoke<Void>(0xDB4E60, entity1, entity2, boneIndex1, boneIndex2, p4, p5); }
 static void ATTACH_ENTITY_BONE_TO_ENTITY_BONE_Y_FORWARD(Entity entity1, Entity entity2, int boneIndex1, int boneIndex2, BOOL p4, BOOL p5) { invoke<Void>(0xDB4E60, entity1, entity2, boneIndex1, boneIndex2, p4, p5); }
 static void ATTACH_ENTITY_TO_ENTITY_PHYSICALLY(Entity entity1, Entity entity2, int boneIndex1, int boneIndex2, float xPos1, float yPos1, float zPos1, float xPos2, float yPos2, float zPos2, float xRot, float yRot, float zRot, float breakForce, BOOL fixedRot, BOOL p15, BOOL collision, BOOL p17, int p18) { invoke<Void>(0xDB4CC0, entity1, entity2, boneIndex1, boneIndex2, xPos1, yPos1, zPos1, xPos2, yPos2, zPos2, xRot, yRot, zRot, breakForce, fixedRot, p15, collision, p17, p18); }
@@ -846,7 +848,7 @@ static BOOL GET_ENTITY_COLLISION_DISABLED(Entity entity) { return invoke<BOOL>(0
 static void SET_ENTITY_COMPLETELY_DISABLE_COLLISION(Entity entity, BOOL toggle, BOOL keepPhysics) { invoke<Void>(0xDB5B70, entity, toggle, keepPhysics); }
 static void SET_ENTITY_COORDS(Entity entity, float xPos, float yPos, float zPos, BOOL xAxis, BOOL yAxis, BOOL zAxis, BOOL clearArea) { invoke<Void>(0xDB5BA0, entity, xPos, yPos, zPos, xAxis, yAxis, zAxis, clearArea); }
 static void SET_ENTITY_COORDS_WITHOUT_PLANTS_RESET(Entity entity, float xPos, float yPos, float zPos, BOOL alive, BOOL deadFlag, BOOL ragdollFlag, BOOL clearArea) { invoke<Void>(0xDB5BA0, entity, xPos, yPos, zPos, alive, deadFlag, ragdollFlag, clearArea); }
-static void SET_ENTITY_COORDS_NO_OFFSET(Entity entity, vector3 xyz, BOOL xAxis, BOOL yAxis, BOOL zAxis) { invoke<Void>(0xDB5BA0, entity, xyz, xAxis, yAxis, zAxis); }
+static void SET_ENTITY_COORDS_NO_OFFSET(Entity entity, float x, float y, float z, BOOL xAxis, BOOL yAxis, BOOL zAxis) { invoke<Void>(0xDB5BA0, entity, x, y, z, xAxis, yAxis, zAxis); }
 static void SET_ENTITY_DYNAMIC(Entity entity, BOOL toggle) { invoke<Void>(0xDB5C70, entity, toggle); }
 static void SET_ENTITY_HEADING(Entity entity, float heading) { invoke<Void>(0xDB5CF0, entity, heading); }
 static void SET_ENTITY_HEALTH(Entity entity, int health, int p2) { invoke<Void>(0xDB5D00, entity, health, p2); }
@@ -895,10 +897,10 @@ static void SET_CAN_CLIMB_ON_ENTITY(Entity entity, BOOL toggle) { invoke<Void>(0
 static void SET_WAIT_FOR_COLLISIONS_BEFORE_PROBE(Entity entity, BOOL toggle) { invoke<Void>(0xDB74A0, entity, toggle); }
 static void SET_ENTITY_NOWEAPONDECALS(Entity entity, BOOL p1) { invoke<Void>(0xDB7500, entity, p1); }
 static void SET_ENTITY_USE_MAX_DISTANCE_FOR_WATER_REFLECTION(Entity entity, BOOL p1) { invoke<Void>(0xDB7570, entity, p1); }
-static vector3 GET_ENTITY_BONE_ROTATION(Entity entity, int boneIndex) { return invoke<vector3>(0xDB75D0, entity, boneIndex); }
-static vector3 GET_ENTITY_BONE_POSTION(Entity entity, int boneIndex) { return invoke<vector3>(0xDB7640, entity, boneIndex); }
-static vector3 GET_ENTITY_BONE_OBJECT_ROTATION(Entity entity, int boneIndex) { return invoke<vector3>(0xDB76B0, entity, boneIndex); }
-static vector3 GET_ENTITY_BONE_OBJECT_POSTION(Entity entity, int boneIndex) { return invoke<vector3>(0xDB7720, entity, boneIndex); }
+static Vector3 GET_ENTITY_BONE_ROTATION(Entity entity, int boneIndex) { return invoke<Vector3>(0xDB75D0, entity, boneIndex); }
+static Vector3 GET_ENTITY_BONE_POSTION(Entity entity, int boneIndex) { return invoke<Vector3>(0xDB7640, entity, boneIndex); }
+static Vector3 GET_ENTITY_BONE_OBJECT_ROTATION(Entity entity, int boneIndex) { return invoke<Vector3>(0xDB76B0, entity, boneIndex); }
+static Vector3 GET_ENTITY_BONE_OBJECT_POSTION(Entity entity, int boneIndex) { return invoke<Vector3>(0xDB7720, entity, boneIndex); }
 static int GET_ENTITY_BONE_COUNT(Entity entity) { return invoke<int>(0xDB7810, entity); }
 static void ENABLE_ENTITY_BULLET_COLLISION(Entity entity) { invoke<Void>(0xDB78C0, entity); }
 static void SET_ENTITY_CAN_ONLY_BE_DAMAGED_BY_ENTITY(Entity entity1, Entity entity2) { invoke<Void>(0xDB7920, entity1, entity2); }
@@ -976,7 +978,7 @@ static BOOL IS_ENTITY_ON_FIRE(Entity entity) { return invoke<BOOL>(0xDBB1F0, ent
 static int GET_NUMBER_OF_FIRES_IN_RANGE(float x, float y, float z, float radius) { return invoke<int>(0xDBB260, x, y, z, radius); }
 static void SET_FLAMMABILITY_MULTIPLIER(float p0) { invoke<Void>(0xDBB2A0, p0); }
 static void STOP_FIRE_IN_RANGE(float x, float y, float z, float radius) { invoke<Void>(0xDBB2E0, x, y, z, radius); }
-static BOOL GET_CLOSEST_FIRE_POS(vector3* outPosition, float x, float y, float z) { return invoke<BOOL>(0xDBB310, outPosition, x, y, z); }
+static BOOL GET_CLOSEST_FIRE_POS(Vector3* outPosition, float x, float y, float z) { return invoke<BOOL>(0xDBB310, outPosition, x, y, z); }
 static void ADD_EXPLOSION(float x, float y, float z, int explosionType, float damageScale, BOOL isAudible, BOOL isInvisible, float cameraShake, BOOL noDamage) { invoke<Void>(0xDBB3E0, x, y, z, explosionType, damageScale, isAudible, isInvisible, cameraShake, noDamage); }
 static void ADD_OWNED_EXPLOSION(Ped ped, float x, float y, float z, int explosionType, float damageScale, BOOL isAudible, BOOL isInvisible, float cameraShake) { invoke<Void>(0xDBB420, ped, x, y, z, explosionType, damageScale, isAudible, isInvisible, cameraShake); }
 static void ADD_EXPLOSION_WITH_USER_VFX(float x, float y, float z, int explosionType, Hash explosionFx, float damageScale, BOOL isAudible, BOOL isInvisible, float cameraShake) { invoke<Void>(0xDBB3E0, x, y, z, explosionType, explosionFx, damageScale, isAudible, isInvisible, cameraShake); }
@@ -1106,7 +1108,7 @@ static void OVERRIDE_NIGHTVISION_LIGHT_RANGE(float p0) { invoke<Void>(0xDCDCF0, 
 static void SET_NOISEOVERIDE(BOOL toggle) { invoke<Void>(0xDCDD00, toggle); }
 static void SET_NOISINESSOVERIDE(float value) { invoke<Void>(0xDCDD20, value); }
 static BOOL GET_SCREEN_COORD_FROM_WORLD_COORD(float worldX, float worldY, float worldZ, float* screenX, float* screenY) { return invoke<BOOL>(0xDCDD40, worldX, worldY, worldZ, screenX, screenY); }
-static vector3 GET_TEXTURE_RESOLUTION(const char* textureDict, const char* textureName) { return invoke<vector3>(0xDCDDB0, textureDict, textureName); }
+static Vector3 GET_TEXTURE_RESOLUTION(const char* textureDict, const char* textureName) { return invoke<Vector3>(0xDCDDB0, textureDict, textureName); }
 static BOOL OVERRIDE_PED_CREW_LOGO_TEXTURE(Ped ped, const char* txd, const char* txn) { return invoke<BOOL>(0xDCDE20, ped, txd, txn); }
 static void SET_DISTANCE_BLUR_STRENGTH_OVERRIDE(float p0) { invoke<Void>(0xDCDE50, p0); }
 static void SET_FLASH(float p0, float p1, float fadeIn, float duration, float fadeOut) { invoke<Void>(0xDCDE70, p0, p1, fadeIn, duration, fadeOut); }
@@ -1155,7 +1157,7 @@ static void GOLF_TRAIL_SET_FIXED_CONTROL_POINT(int type, float xPos, float yPos,
 static void GOLF_TRAIL_SET_SHADER_PARAMS(float p0, float p1, float p2, float p3, float p4) { invoke<Void>(0xDCE5D0, p0, p1, p2, p3, p4); }
 static void GOLF_TRAIL_SET_FACING(BOOL p0) { invoke<Void>(0xDCE600, p0); }
 static float GOLF_TRAIL_GET_MAX_HEIGHT() { return invoke<float>(0xDCE620); }
-static vector3 GOLF_TRAIL_GET_VISUAL_CONTROL_POINT(int p0) { return invoke<vector3>(0xDCE640, p0); }
+static Vector3 GOLF_TRAIL_GET_VISUAL_CONTROL_POINT(int p0) { return invoke<Vector3>(0xDCE640, p0); }
 static void SET_SEETHROUGH(BOOL toggle) { invoke<Void>(0xDCE690, toggle); }
 static BOOL GET_USINGSEETHROUGH() { return invoke<BOOL>(0xDCE6D0); }
 static void SEETHROUGH_RESET() { invoke<Void>(0xDCE6E0); }
@@ -1441,7 +1443,7 @@ static void END_TEXT_COMMAND_PRINT(int duration, BOOL drawImmediately) { invoke<
 static void BEGIN_TEXT_COMMAND_IS_MESSAGE_DISPLAYED(const char* text) { invoke<Void>(0xDE0660, text); }
 static BOOL END_TEXT_COMMAND_IS_MESSAGE_DISPLAYED() { return invoke<BOOL>(0xDE0670); }
 static void BEGIN_TEXT_COMMAND_DISPLAY_TEXT(const char* text) { invoke<Void>(0xDE0690, text); }
-static void END_TEXT_COMMAND_DISPLAY_TEXT(float x, float y, int p2) { invoke<Void>(0xDE06C0, x, y, p2); }
+static void END_TEXT_COMMAND_DISPLAY_TEXT(float x, float y) { invoke<Void>(0xDE06C0, x, y); }
 static void BEGIN_TEXT_COMMAND_GET_SCREEN_WIDTH_OF_DISPLAY_TEXT(const char* text) { invoke<Void>(0xDE0710, text); }
 static float END_TEXT_COMMAND_GET_SCREEN_WIDTH_OF_DISPLAY_TEXT(BOOL p0) { return invoke<float>(0xDE0720, p0); }
 static void BEGIN_TEXT_COMMAND_GET_NUMBER_OF_LINES_FOR_STRING(const char* entry) { invoke<Void>(0xDE0750, entry); }
@@ -1567,7 +1569,7 @@ static int GET_NUMBER_OF_ACTIVE_BLIPS() { return invoke<int>(0xDE1EF0); }
 static Blip GET_NEXT_BLIP_INFO_ID(int blipSprite) { return invoke<Blip>(0xDE1F60, blipSprite); }
 static Blip GET_FIRST_BLIP_INFO_ID(int blipSprite) { return invoke<Blip>(0xDE1F80, blipSprite); }
 static Blip GET_CLOSEST_BLIP_INFO_ID(int blipSprite) { return invoke<Blip>(0xDE1FB0, blipSprite); }
-static vector3 GET_BLIP_INFO_ID_COORD(Blip blip) { return invoke<vector3>(0xDE1FD0, blip); }
+static Vector3 GET_BLIP_INFO_ID_COORD(Blip blip) { return invoke<Vector3>(0xDE1FD0, blip); }
 static int GET_BLIP_INFO_ID_DISPLAY(Blip blip) { return invoke<int>(0xDE2080, blip); }
 static int GET_BLIP_INFO_ID_TYPE(Blip blip) { return invoke<int>(0xDE20C0, blip); }
 static Entity GET_BLIP_INFO_ID_ENTITY_INDEX(Blip blip) { return invoke<Entity>(0xDE2100, blip); }
@@ -1581,7 +1583,7 @@ static Blip ADD_BLIP_FOR_COORD(float x, float y, float z) { return invoke<Blip>(
 static void TRIGGER_SONAR_BLIP(float posX, float posY, float posZ, float radius, int p4) { invoke<Void>(0xDE2380, posX, posY, posZ, radius, p4); }
 static void ALLOW_SONAR_BLIPS(BOOL toggle) { invoke<Void>(0xDE23F0, toggle); }
 static void SET_BLIP_COORDS(Blip blip, float posX, float posY, float posZ) { invoke<Void>(0xDE2410, blip, posX, posY, posZ); }
-static vector3 GET_BLIP_COORDS(Blip blip) { return invoke<vector3>(0xDE24B0, blip); }
+static Vector3 GET_BLIP_COORDS(Blip blip) { return invoke<Vector3>(0xDE24B0, blip); }
 static void SET_BLIP_SPRITE(Blip blip, int spriteId) { invoke<Void>(0xDE2560, blip, spriteId); }
 static int GET_BLIP_SPRITE(Blip blip) { return invoke<int>(0xDE2580, blip); }
 static void SET_COP_BLIP_SPRITE(int p0, float p1) { invoke<Void>(0xDE25C0, p0, p1); }
@@ -1748,7 +1750,7 @@ static void HIDE_STREET_AND_CAR_NAMES_THIS_FRAME() { invoke<Void>(0xDE4170); }
 static void RESET_RETICULE_VALUES() { invoke<Void>(0xDE4180); }
 static void RESET_HUD_COMPONENT_VALUES(int id) { invoke<Void>(0xDE4190, id); }
 static void SET_HUD_COMPONENT_POSITION(int id, float x, float y) { invoke<Void>(0xDE41B0, id, x, y); }
-static vector3 GET_HUD_COMPONENT_POSITION(int id) { return invoke<vector3>(0xDE4210, id); }
+static Vector3 GET_HUD_COMPONENT_POSITION(int id) { return invoke<Vector3>(0xDE4210, id); }
 static void CLEAR_REMINDER_MESSAGE() { invoke<Void>(0xDE42D0); }
 static int GET_HUD_SCREEN_POSITION_FROM_WORLD_POSITION(float worldX, float worldY, float worldZ, float* screenX, float* screenY) { return invoke<int>(0xDE42E0, worldX, worldY, worldZ, screenX, screenY); }
 static void OPEN_REPORTUGC_MENU() { invoke<Void>(0xDE4380); }
@@ -1815,7 +1817,7 @@ static void SET_FRONTEND_ACTIVE(BOOL active) { invoke<Void>(0xDE5270, active); }
 static BOOL IS_PAUSE_MENU_ACTIVE() { return invoke<BOOL>(0xDE5290); }
 static BOOL IS_STORE_PENDING_NETWORK_SHUTDOWN_TO_OPEN() { return invoke<BOOL>(0xDE52C0); }
 static int GET_PAUSE_MENU_STATE() { return invoke<int>(0xDE52D0); }
-static vector3 GET_PAUSE_MENU_POSITION() { return invoke<vector3>(0xDE52F0); }
+static Vector3 GET_PAUSE_MENU_POSITION() { return invoke<Vector3>(0xDE52F0); }
 static BOOL IS_PAUSE_MENU_RESTARTING() { return invoke<BOOL>(0xDE5370); }
 static void FORCE_SCRIPTED_GFX_WHEN_FRONTEND_ACTIVE(const char* p0) { invoke<Void>(0xDE5390, p0); }
 static void PAUSE_MENUCEPTION_GO_DEEPER(int page) { invoke<Void>(0xDE53A0, page); }
@@ -1888,9 +1890,9 @@ static void SET_PLAYER_IS_IN_DIRECTOR_MODE(BOOL toggle) { invoke<Void>(0xDE5E70,
 static void SET_DIRECTOR_MODE_AVAILABLE(BOOL toggle) { invoke<Void>(0xDE5E90, toggle); }
 static void HIDE_HUDMARKERS_THIS_FRAME() { invoke<Void>(0xDE5EB0); }
 static float GET_INTERIOR_HEADING(Interior interior) { return invoke<float>(0xDE8060, interior); }
-static void GET_INTERIOR_LOCATION_AND_NAMEHASH(Interior interior, vector3* position, Hash* nameHash) { invoke<Void>(0xDE80B0, interior, position, nameHash); }
+static void GET_INTERIOR_LOCATION_AND_NAMEHASH(Interior interior, Vector3* position, Hash* nameHash) { invoke<Void>(0xDE80B0, interior, position, nameHash); }
 static int GET_INTERIOR_GROUP_ID(Interior interior) { return invoke<int>(0xDE8190, interior); }
-static vector3 GET_OFFSET_FROM_INTERIOR_IN_WORLD_COORDS(Interior interior, float x, float y, float z) { return invoke<vector3>(0xDE81E0, interior, x, y, z); }
+static Vector3 GET_OFFSET_FROM_INTERIOR_IN_WORLD_COORDS(Interior interior, float x, float y, float z) { return invoke<Vector3>(0xDE81E0, interior, x, y, z); }
 static BOOL IS_INTERIOR_SCENE() { return invoke<BOOL>(0xDE82C0); }
 static BOOL IS_VALID_INTERIOR(Interior interior) { return invoke<BOOL>(0xDE82D0, interior); }
 static void CLEAR_ROOM_FOR_ENTITY(Entity entity) { invoke<Void>(0xDE82F0, entity); }
@@ -2009,7 +2011,7 @@ static void SET_WIND(float speed) { invoke<Void>(0xDF6150, speed); }
 static void SET_WIND_SPEED(float speed) { invoke<Void>(0xDF6150, speed); }
 static float GET_WIND_SPEED() { return invoke<float>(0xDF61A0); }
 static void SET_WIND_DIRECTION(float direction) { invoke<Void>(0xDF6150, direction); }
-static vector3 GET_WIND_DIRECTION() { return invoke<vector3>(0xDF61E0); }
+static Vector3 GET_WIND_DIRECTION() { return invoke<Vector3>(0xDF61E0); }
 static void SET_RAIN(float intensity) { invoke<Void>(0xDF6250, intensity); }
 static float GET_RAIN_LEVEL() { return invoke<float>(0xDF6270); }
 static void SET_SNOW(float level) { invoke<Void>(0xDF6290, level); }
@@ -2030,7 +2032,7 @@ static float GET_RANDOM_FLOAT_IN_RANGE(float startRange, float endRange) { retur
 static int GET_RANDOM_INT_IN_RANGE(int startRange, int endRange) { return invoke<int>(0xDF64A0, startRange, endRange); }
 static int GET_RANDOM_MWC_INT_IN_RANGE(int startRange, int endRange) { return invoke<int>(0xDF64F0, startRange, endRange); }
 static BOOL GET_GROUND_Z_FOR_3D_COORD(float x, float y, float z, float* groundZ, BOOL ignoreWater, BOOL p5) { return invoke<BOOL>(0xDF65A0, x, y, z, groundZ, ignoreWater, p5); }
-static BOOL GET_GROUND_Z_AND_NORMAL_FOR_3D_COORD(float x, float y, float z, float* groundZ, vector3* normal) { return invoke<BOOL>(0xDF65E0, x, y, z, groundZ, normal); }
+static BOOL GET_GROUND_Z_AND_NORMAL_FOR_3D_COORD(float x, float y, float z, float* groundZ, Vector3* normal) { return invoke<BOOL>(0xDF65E0, x, y, z, groundZ, normal); }
 static BOOL GET_GROUND_Z_EXCLUDING_OBJECTS_FOR_3D_COORD(float x, float y, float z, float* groundZ, BOOL p4, BOOL p5) { return invoke<BOOL>(0xDF66E0, x, y, z, groundZ, p4, p5); }
 static float ASIN(float p0) { return invoke<float>(0xDF6720, p0); }
 static float ACOS(float p0) { return invoke<float>(0xDF6770, p0); }
@@ -2041,7 +2043,7 @@ static float GET_DISTANCE_BETWEEN_COORDS(float x1, float y1, float z1, float x2,
 static float GET_ANGLE_BETWEEN_2D_VECTORS(float x1, float y1, float x2, float y2) { return invoke<float>(0xDF68D0, x1, y1, x2, y2); }
 static float GET_HEADING_FROM_VECTOR_2D(float dx, float dy) { return invoke<float>(0xDF6990, dx, dy); }
 static float GET_RATIO_OF_CLOSEST_POINT_ON_LINE(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, BOOL clamp) { return invoke<float>(0xDF6A10, x1, y1, z1, x2, y2, z2, x3, y3, z3, clamp); }
-static vector3 GET_CLOSEST_POINT_ON_LINE(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, BOOL clamp) { return invoke<vector3>(0xDF6B30, x1, y1, z1, x2, y2, z2, x3, y3, z3, clamp); }
+static Vector3 GET_CLOSEST_POINT_ON_LINE(float x1, float y1, float z1, float x2, float y2, float z2, float x3, float y3, float z3, BOOL clamp) { return invoke<Vector3>(0xDF6B30, x1, y1, z1, x2, y2, z2, x3, y3, z3, clamp); }
 static BOOL GET_LINE_PLANE_INTERSECTION(float p0, float p1, float p2, float p3, float p4, float p5, float p6, float p7, float p8, float p9, float p10, float p11, float* p12) { return invoke<BOOL>(0xDF6C80, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12); }
 static BOOL GET_POINT_AREA_OVERLAP(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8, Any p9, Any p10, Any p11, Any p12, Any p13) { return invoke<BOOL>(0xDF6D60, p0, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10, p11, p12, p13); }
 static void SET_BIT(int* address, int offset) { invoke<Void>(0xDF6DA0, address, offset); }
@@ -2084,7 +2086,7 @@ static void SET_FADE_IN_AFTER_LOAD(BOOL toggle) { invoke<Void>(0xDF7D40, toggle)
 static int REGISTER_SAVE_HOUSE(float x, float y, float z, float p3, const char* p4, Any p5, Any p6) { return invoke<int>(0xDF7D60, x, y, z, p3, p4, p5, p6); }
 static void SET_SAVE_HOUSE(int savehouseHandle, BOOL p1, BOOL p2) { invoke<Void>(0xDF7DE0, savehouseHandle, p1, p2); }
 static BOOL OVERRIDE_SAVE_HOUSE(BOOL p0, float p1, float p2, float p3, float p4, BOOL p5, float p6, float p7) { return invoke<BOOL>(0xDF7E00, p0, p1, p2, p3, p4, p5, p6, p7); }
-static BOOL GET_SAVE_HOUSE_DETAILS_AFTER_SUCCESSFUL_LOAD(vector3* p0, float* p1, BOOL* fadeInAfterLoad, BOOL* p3) { return invoke<BOOL>(0xDF7EE0, p0, p1, fadeInAfterLoad, p3); }
+static BOOL GET_SAVE_HOUSE_DETAILS_AFTER_SUCCESSFUL_LOAD(Vector3* p0, float* p1, BOOL* fadeInAfterLoad, BOOL* p3) { return invoke<BOOL>(0xDF7EE0, p0, p1, fadeInAfterLoad, p3); }
 static void DO_AUTO_SAVE() { invoke<Void>(0xDF7FB0); }
 static BOOL GET_IS_AUTO_SAVE_OFF() { return invoke<BOOL>(0xDF8030); }
 static BOOL IS_AUTO_SAVE_IN_PROGRESS() { return invoke<BOOL>(0xDF8050); }
@@ -2107,7 +2109,7 @@ static BOOL IS_MEMORY_CARD_IN_USE() { return invoke<BOOL>(0xDF8220); }
 static void SHOOT_SINGLE_BULLET_BETWEEN_COORDS(float x1, float y1, float z1, float x2, float y2, float z2, int damage, BOOL p7, Hash weaponHash, Ped ownerPed, BOOL isAudible, BOOL isInvisible, float speed) { invoke<Void>(0xDF8240, x1, y1, z1, x2, y2, z2, damage, p7, weaponHash, ownerPed, isAudible, isInvisible, speed); }
 static void SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY(float x1, float y1, float z1, float x2, float y2, float z2, int damage, BOOL p7, Hash weaponHash, Ped ownerPed, BOOL isAudible, BOOL isInvisible, float speed, Entity entity, Any p14) { invoke<Void>(0xDF8240, x1, y1, z1, x2, y2, z2, damage, p7, weaponHash, ownerPed, isAudible, isInvisible, speed, entity, p14); }
 static void SHOOT_SINGLE_BULLET_BETWEEN_COORDS_IGNORE_ENTITY_NEW(float x1, float y1, float z1, float x2, float y2, float z2, int damage, BOOL p7, Hash weaponHash, Ped ownerPed, BOOL isAudible, BOOL isInvisible, float speed, Entity entity, BOOL p14, BOOL p15, Entity targetEntity, BOOL p17, Any p18, Any p19, Any p20) { invoke<Void>(0xDF8240, x1, y1, z1, x2, y2, z2, damage, p7, weaponHash, ownerPed, isAudible, isInvisible, speed, entity, p14, p15, targetEntity, p17, p18, p19, p20); }
-static void GET_MODEL_DIMENSIONS(Hash modelHash, vector3* minimum, vector3* maximum) { invoke<Void>(0xDF8480, modelHash, minimum, maximum); }
+static void GET_MODEL_DIMENSIONS(Hash modelHash, Vector3* minimum, Vector3* maximum) { invoke<Void>(0xDF8480, modelHash, minimum, maximum); }
 static void SET_FAKE_WANTED_LEVEL(int fakeWantedLevel) { invoke<Void>(0xDF8500, fakeWantedLevel); }
 static int GET_FAKE_WANTED_LEVEL() { return invoke<int>(0xDF85A0); }
 static void USING_MISSION_CREATOR(BOOL toggle) { invoke<Void>(0xDF85B0, toggle); }
@@ -2127,10 +2129,10 @@ static BOOL IS_PROJECTILE_IN_AREA(float x1, float y1, float z1, float x2, float 
 static BOOL IS_PROJECTILE_TYPE_IN_AREA(float x1, float y1, float z1, float x2, float y2, float z2, int type, BOOL ownedByPlayer) { return invoke<BOOL>(0xDF89B0, x1, y1, z1, x2, y2, z2, type, ownedByPlayer); }
 static BOOL IS_PROJECTILE_TYPE_IN_ANGLED_AREA(float x1, float y1, float z1, float x2, float y2, float z2, float width, Any p7, BOOL ownedByPlayer) { return invoke<BOOL>(0xDF8A10, x1, y1, z1, x2, y2, z2, width, p7, ownedByPlayer); }
 static BOOL IS_PROJECTILE_TYPE_WITHIN_DISTANCE(float x, float y, float z, Hash projectileHash, float radius, BOOL ownedByPlayer) { return invoke<BOOL>(0xDF67C0, x, y, z, projectileHash, radius, ownedByPlayer); }
-static BOOL GET_COORDS_OF_PROJECTILE_TYPE_IN_AREA(float x1, float y1, float z1, float x2, float y2, float z2, Hash projectileHash, vector3* projectilePos, BOOL ownedByPlayer) { return invoke<BOOL>(0xDF8AB0, x1, y1, z1, x2, y2, z2, projectileHash, projectilePos, ownedByPlayer); }
-static BOOL GET_COORDS_OF_PROJECTILE_TYPE_IN_ANGLED_AREA(float vecAngledAreaPoint1X, float vecAngledAreaPoint1Y, float vecAngledAreaPoint1Z, float vecAngledAreaPoint2X, float vecAngledAreaPoint2Y, float vecAngledAreaPoint2Z, float distanceOfOppositeFace, Hash weaponType, vector3* positionOut, BOOL bIsPlayer) { return invoke<BOOL>(0xDF8B40, vecAngledAreaPoint1X, vecAngledAreaPoint1Y, vecAngledAreaPoint1Z, vecAngledAreaPoint2X, vecAngledAreaPoint2Y, vecAngledAreaPoint2Z, distanceOfOppositeFace, weaponType, positionOut, bIsPlayer); }
-static BOOL GET_COORDS_OF_PROJECTILE_TYPE_WITHIN_DISTANCE(Ped ped, Hash weaponHash, float distance, vector3* outCoords, BOOL p4) { return invoke<BOOL>(0xDF67C0, ped, weaponHash, distance, outCoords, p4); }
-static BOOL GET_PROJECTILE_OF_PROJECTILE_TYPE_WITHIN_DISTANCE(Ped ped, Hash weaponHash, float distance, vector3* outCoords, Object* outProjectile, BOOL p5) { return invoke<BOOL>(0xDF67C0, ped, weaponHash, distance, outCoords, outProjectile, p5); }
+static BOOL GET_COORDS_OF_PROJECTILE_TYPE_IN_AREA(float x1, float y1, float z1, float x2, float y2, float z2, Hash projectileHash, Vector3* projectilePos, BOOL ownedByPlayer) { return invoke<BOOL>(0xDF8AB0, x1, y1, z1, x2, y2, z2, projectileHash, projectilePos, ownedByPlayer); }
+static BOOL GET_COORDS_OF_PROJECTILE_TYPE_IN_ANGLED_AREA(float vecAngledAreaPoint1X, float vecAngledAreaPoint1Y, float vecAngledAreaPoint1Z, float vecAngledAreaPoint2X, float vecAngledAreaPoint2Y, float vecAngledAreaPoint2Z, float distanceOfOppositeFace, Hash weaponType, Vector3* positionOut, BOOL bIsPlayer) { return invoke<BOOL>(0xDF8B40, vecAngledAreaPoint1X, vecAngledAreaPoint1Y, vecAngledAreaPoint1Z, vecAngledAreaPoint2X, vecAngledAreaPoint2Y, vecAngledAreaPoint2Z, distanceOfOppositeFace, weaponType, positionOut, bIsPlayer); }
+static BOOL GET_COORDS_OF_PROJECTILE_TYPE_WITHIN_DISTANCE(Ped ped, Hash weaponHash, float distance, Vector3* outCoords, BOOL p4) { return invoke<BOOL>(0xDF67C0, ped, weaponHash, distance, outCoords, p4); }
+static BOOL GET_PROJECTILE_OF_PROJECTILE_TYPE_WITHIN_DISTANCE(Ped ped, Hash weaponHash, float distance, Vector3* outCoords, Object* outProjectile, BOOL p5) { return invoke<BOOL>(0xDF67C0, ped, weaponHash, distance, outCoords, outProjectile, p5); }
 static BOOL IS_BULLET_IN_ANGLED_AREA(float x1, float y1, float z1, float x2, float y2, float z2, float width, BOOL ownedByPlayer) { return invoke<BOOL>(0xDF8D40, x1, y1, z1, x2, y2, z2, width, ownedByPlayer); }
 static BOOL IS_BULLET_IN_AREA(float x, float y, float z, float radius, BOOL ownedByPlayer) { return invoke<BOOL>(0xDF8E00, x, y, z, radius, ownedByPlayer); }
 static BOOL IS_BULLET_IN_BOX(float x1, float y1, float z1, float x2, float y2, float z2, BOOL ownedByPlayer) { return invoke<BOOL>(0xDF8EA0, x1, y1, z1, x2, y2, z2, ownedByPlayer); }
@@ -2204,7 +2206,7 @@ static void DELETE_INCIDENT(int incidentId) { invoke<Void>(0xDF9CD0, incidentId)
 static BOOL IS_INCIDENT_VALID(int incidentId) { return invoke<BOOL>(0xDF9D10, incidentId); }
 static void SET_INCIDENT_REQUESTED_UNITS(int incidentId, int dispatchService, int numUnits) { invoke<Void>(0xDF9D50, incidentId, dispatchService, numUnits); }
 static void SET_IDEAL_SPAWN_DISTANCE_FOR_INCIDENT(int incidentId, float p1) { invoke<Void>(0xDF67C0, incidentId, p1); }
-static BOOL FIND_SPAWN_POINT_IN_DIRECTION(float posX, float posY, float posZ, float fwdVecX, float fwdVecY, float fwdVecZ, float distance, vector3* spawnPoint) { return invoke<BOOL>(0xDF9E20, posX, posY, posZ, fwdVecX, fwdVecY, fwdVecZ, distance, spawnPoint); }
+static BOOL FIND_SPAWN_POINT_IN_DIRECTION(float posX, float posY, float posZ, float fwdVecX, float fwdVecY, float fwdVecZ, float distance, Vector3* spawnPoint) { return invoke<BOOL>(0xDF9E20, posX, posY, posZ, fwdVecX, fwdVecY, fwdVecZ, distance, spawnPoint); }
 static int ADD_POP_MULTIPLIER_AREA(float x1, float y1, float z1, float x2, float y2, float z2, float p6, float p7, BOOL p8, BOOL p9) { return invoke<int>(0xDF9ED0, x1, y1, z1, x2, y2, z2, p6, p7, p8, p9); }
 static BOOL DOES_POP_MULTIPLIER_AREA_EXIST(int id) { return invoke<BOOL>(0xDF9F90, id); }
 static void REMOVE_POP_MULTIPLIER_AREA(int id, BOOL p1) { invoke<Void>(0xDF9FD0, id, p1); }
@@ -2287,9 +2289,9 @@ static void CREATE_MOBILE_PHONE(int phoneType) { invoke<Void>(0xEAF040, phoneTyp
 static void DESTROY_MOBILE_PHONE() { invoke<Void>(0xEAF050); }
 static void SET_MOBILE_PHONE_SCALE(float scale) { invoke<Void>(0xEAF080, scale); }
 static void SET_MOBILE_PHONE_ROTATION(float rotX, float rotY, float rotZ, Any p3) { invoke<Void>(0xEAF0A0, rotX, rotY, rotZ, p3); }
-static void GET_MOBILE_PHONE_ROTATION(vector3* rotation, Vehicle p1) { invoke<Void>(0xEAF0E0, rotation, p1); }
+static void GET_MOBILE_PHONE_ROTATION(Vector3* rotation, Vehicle p1) { invoke<Void>(0xEAF0E0, rotation, p1); }
 static void SET_MOBILE_PHONE_POSITION(float posX, float posY, float posZ) { invoke<Void>(0xEAF1D0, posX, posY, posZ); }
-static void GET_MOBILE_PHONE_POSITION(vector3* position) { invoke<Void>(0xEAF260, position); }
+static void GET_MOBILE_PHONE_POSITION(Vector3* position) { invoke<Void>(0xEAF260, position); }
 static void SCRIPT_IS_MOVING_MOBILE_PHONE_OFFSCREEN(BOOL toggle) { invoke<Void>(0xEAF2D0, toggle); }
 static BOOL CAN_PHONE_BE_SEEN_ON_SCREEN() { return invoke<BOOL>(0xEAF2F0); }
 static void SET_MOBILE_PHONE_DOF_STATE(BOOL toggle) { invoke<Void>(0xEAF300, toggle); }
@@ -3285,7 +3287,7 @@ static BOOL NETWORK_START_RESPAWN_SEARCH_FOR_PLAYER(Player player, float x, floa
 static BOOL NETWORK_START_RESPAWN_SEARCH_IN_ANGLED_AREA_FOR_PLAYER(Player player, float x1, float y1, float z1, float x2, float y2, float z2, float width, float p8, float p9, float p10, int flags) { return invoke<BOOL>(0xE55510, player, x1, y1, z1, x2, y2, z2, width, p8, p9, p10, flags); }
 static int NETWORK_QUERY_RESPAWN_RESULTS(Any* p0) { return invoke<int>(0xE55550, p0); }
 static void NETWORK_CANCEL_RESPAWN_SEARCH() { invoke<Void>(0xE555B0); }
-static void NETWORK_GET_RESPAWN_RESULT(int randomInt, vector3* coordinates, float* heading) { invoke<Void>(0xE555C0, randomInt, coordinates, heading); }
+static void NETWORK_GET_RESPAWN_RESULT(int randomInt, Vector3* coordinates, float* heading) { invoke<Void>(0xE555C0, randomInt, coordinates, heading); }
 static int NETWORK_GET_RESPAWN_RESULT_FLAGS(int p0) { return invoke<int>(0xE555C0, p0); }
 static void NETWORK_START_SOLO_TUTORIAL_SESSION() { invoke<Void>(0xE55650); }
 static void NETWORK_ALLOW_GANG_TO_JOIN_TUTORIAL_SESSION(int teamId, int instanceId) { invoke<Void>(0xE55680, teamId, instanceId); }
@@ -3512,10 +3514,10 @@ static int NETWORK_GET_NUM_UNACKED_RELIABLES(Player player) { return invoke<int>
 static int NETWORK_GET_UNRELIABLE_RESEND_COUNT(Player player) { return invoke<int>(0xE59B50, player); }
 static int NETWORK_GET_HIGHEST_RELIABLE_RESEND_COUNT(Player player) { return invoke<int>(0xE59BB0, player); }
 static void NETWORK_REPORT_CODE_TAMPER() { invoke<Void>(0xE59C10); }
-static vector3 NETWORK_GET_LAST_ENTITY_POS_RECEIVED_OVER_NETWORK(Entity entity) { return invoke<vector3>(0xE59C30, entity); }
-static vector3 NETWORK_GET_LAST_PLAYER_POS_RECEIVED_OVER_NETWORK(Player player) { return invoke<vector3>(0xE59D30, player); }
-static vector3 NETWORK_GET_LAST_VEL_RECEIVED_OVER_NETWORK(Entity entity) { return invoke<vector3>(0xE59E00, entity); }
-static vector3 NETWORK_GET_PREDICTED_VELOCITY(Entity entity) { return invoke<vector3>(0xE59EC0, entity); }
+static Vector3 NETWORK_GET_LAST_ENTITY_POS_RECEIVED_OVER_NETWORK(Entity entity) { return invoke<Vector3>(0xE59C30, entity); }
+static Vector3 NETWORK_GET_LAST_PLAYER_POS_RECEIVED_OVER_NETWORK(Player player) { return invoke<Vector3>(0xE59D30, player); }
+static Vector3 NETWORK_GET_LAST_VEL_RECEIVED_OVER_NETWORK(Entity entity) { return invoke<Vector3>(0xE59E00, entity); }
+static Vector3 NETWORK_GET_PREDICTED_VELOCITY(Entity entity) { return invoke<Vector3>(0xE59EC0, entity); }
 static void NETWORK_DUMP_NET_IF_CONFIG() { invoke<Void>(0xE59F90); }
 static void NETWORK_GET_SIGNALLING_INFO(Any* p0) { invoke<Void>(0xE59FA0, p0); }
 static void NETWORK_GET_NET_STATISTICS_INFO(Any* p0) { invoke<Void>(0xE59FB0, p0); }
@@ -3535,8 +3537,8 @@ static BOOL HAS_OBJECT_BEEN_BROKEN(Object object, Any p1) { return invoke<BOOL>(
 static BOOL HAS_CLOSEST_OBJECT_OF_TYPE_BEEN_BROKEN(float p0, float p1, float p2, float p3, Hash modelHash, Any p5) { return invoke<BOOL>(0xE63FC0, p0, p1, p2, p3, modelHash, p5); }
 static BOOL HAS_CLOSEST_OBJECT_OF_TYPE_BEEN_COMPLETELY_DESTROYED(float x, float y, float z, float radius, Hash modelHash, BOOL p5) { return invoke<BOOL>(0xE63FF0, x, y, z, radius, modelHash, p5); }
 static BOOL GET_HAS_OBJECT_BEEN_COMPLETELY_DESTROYED(Any p0) { return invoke<BOOL>(0xE64020, p0); }
-static vector3 GET_OFFSET_FROM_COORD_AND_HEADING_IN_WORLD_COORDS(float xPos, float yPos, float zPos, float heading, float xOffset, float yOffset, float zOffset) { return invoke<vector3>(0xE64090, xPos, yPos, zPos, heading, xOffset, yOffset, zOffset); }
-static BOOL GET_COORDS_AND_ROTATION_OF_CLOSEST_OBJECT_OF_TYPE(float x, float y, float z, float radius, Hash modelHash, vector3* outPosition, vector3* outRotation, int rotationOrder) { return invoke<BOOL>(0xE64170, x, y, z, radius, modelHash, outPosition, outRotation, rotationOrder); }
+static Vector3 GET_OFFSET_FROM_COORD_AND_HEADING_IN_WORLD_COORDS(float xPos, float yPos, float zPos, float heading, float xOffset, float yOffset, float zOffset) { return invoke<Vector3>(0xE64090, xPos, yPos, zPos, heading, xOffset, yOffset, zOffset); }
+static BOOL GET_COORDS_AND_ROTATION_OF_CLOSEST_OBJECT_OF_TYPE(float x, float y, float z, float radius, Hash modelHash, Vector3* outPosition, Vector3* outRotation, int rotationOrder) { return invoke<BOOL>(0xE64170, x, y, z, radius, modelHash, outPosition, outRotation, rotationOrder); }
 static void SET_STATE_OF_CLOSEST_DOOR_OF_TYPE(Hash type, float x, float y, float z, BOOL locked, float heading, BOOL p6) { invoke<Void>(0xE64220, type, x, y, z, locked, heading, p6); }
 static void GET_STATE_OF_CLOSEST_DOOR_OF_TYPE(Hash type, float x, float y, float z, BOOL* locked, float* heading) { invoke<Void>(0xE64320, type, x, y, z, locked, heading); }
 static void SET_LOCKED_UNSTREAMED_IN_DOOR_OF_TYPE(Hash modelHash, float x, float y, float z, BOOL locked, float xRotMult, float yRotMult, float zRotMult) { invoke<Void>(0xE64340, modelHash, x, y, z, locked, xRotMult, yRotMult, zRotMult); }
@@ -3610,10 +3612,10 @@ static void FORCE_PORTABLE_PICKUP_LAST_ACCESSIBLE_POSITION_SETTING(Object object
 static void HIDE_PORTABLE_PICKUP_WHEN_DETACHED(Object pickupObject, BOOL toggle) { invoke<Void>(0xE65CA0, pickupObject, toggle); }
 static void SET_MAX_NUM_PORTABLE_PICKUPS_CARRIED_BY_PLAYER(Hash modelHash, int number) { invoke<Void>(0xE65D00, modelHash, number); }
 static void SET_LOCAL_PLAYER_CAN_COLLECT_PORTABLE_PICKUPS(BOOL toggle) { invoke<Void>(0xE65DC0, toggle); }
-static vector3 GET_SAFE_PICKUP_COORDS(float x, float y, float z, float p3, float p4) { return invoke<vector3>(0xE65E10, x, y, z, p3, p4); }
+static Vector3 GET_SAFE_PICKUP_COORDS(float x, float y, float z, float p3, float p4) { return invoke<Vector3>(0xE65E10, x, y, z, p3, p4); }
 static void ADD_EXTENDED_PICKUP_PROBE_AREA(float x, float y, float z, float radius) { invoke<Void>(0xE65F20, x, y, z, radius); }
 static void CLEAR_EXTENDED_PICKUP_PROBE_AREAS() { invoke<Void>(0xE65F90); }
-static vector3 GET_PICKUP_COORDS(Pickup pickup) { return invoke<vector3>(0xE65FA0, pickup); }
+static Vector3 GET_PICKUP_COORDS(Pickup pickup) { return invoke<Vector3>(0xE65FA0, pickup); }
 static void SUPPRESS_PICKUP_SOUND_FOR_PICKUP(Any p0, Any p1) { invoke<Void>(0xE66040, p0, p1); }
 static void REMOVE_ALL_PICKUPS_OF_TYPE(Hash pickupHash) { invoke<Void>(0xE660A0, pickupHash); }
 static BOOL HAS_PICKUP_BEEN_COLLECTED(Pickup pickup) { return invoke<BOOL>(0xE660C0, pickup); }
@@ -3735,21 +3737,21 @@ static void ALLOW_ALTERNATIVE_SCRIPT_CONTROLS_LAYOUT(int control) { invoke<Void>
 static void SET_ROADS_IN_AREA(float x1, float y1, float z1, float x2, float y2, float z2, BOOL nodeEnabled, BOOL unknown2) { invoke<Void>(0xE6F500, x1, y1, z1, x2, y2, z2, nodeEnabled, unknown2); }
 static void SET_ROADS_IN_ANGLED_AREA(float x1, float y1, float z1, float x2, float y2, float z2, float width, BOOL unknown1, BOOL unknown2, BOOL unknown3) { invoke<Void>(0xE6F530, x1, y1, z1, x2, y2, z2, width, unknown1, unknown2, unknown3); }
 static void SET_PED_PATHS_IN_AREA(float x1, float y1, float z1, float x2, float y2, float z2, BOOL p6, Any p7) { invoke<Void>(0xE6F570, x1, y1, z1, x2, y2, z2, p6, p7); }
-static BOOL GET_SAFE_COORD_FOR_PED(float x, float y, float z, BOOL onGround, vector3* outPosition, int flags) { return invoke<BOOL>(0xE6F5A0, x, y, z, onGround, outPosition, flags); }
-static BOOL GET_CLOSEST_VEHICLE_NODE(float x, float y, float z, vector3* outPosition, int nodeFlags, float p5, float p6) { return invoke<BOOL>(0xE6F6F0, x, y, z, outPosition, nodeFlags, p5, p6); }
-static BOOL GET_CLOSEST_MAJOR_VEHICLE_NODE(float x, float y, float z, vector3* outPosition, float unknown1, float unknown2) { return invoke<BOOL>(0xE6F7D0, x, y, z, outPosition, unknown1, unknown2); }
-static BOOL GET_CLOSEST_VEHICLE_NODE_WITH_HEADING(float x, float y, float z, vector3* outPosition, float* outHeading, int nodeType, float p6, float p7) { return invoke<BOOL>(0xE6F6F0, x, y, z, outPosition, outHeading, nodeType, p6, p7); }
-static BOOL GET_NTH_CLOSEST_VEHICLE_NODE(float x, float y, float z, int nthClosest, vector3* outPosition, int nodeFlags, float unknown1, float unknown2) { return invoke<BOOL>(0xE6F990, x, y, z, nthClosest, outPosition, nodeFlags, unknown1, unknown2); }
+static BOOL GET_SAFE_COORD_FOR_PED(float x, float y, float z, BOOL onGround, Vector3* outPosition, int flags) { return invoke<BOOL>(0xE6F5A0, x, y, z, onGround, outPosition, flags); }
+static BOOL GET_CLOSEST_VEHICLE_NODE(float x, float y, float z, Vector3* outPosition, int nodeFlags, float p5, float p6) { return invoke<BOOL>(0xE6F6F0, x, y, z, outPosition, nodeFlags, p5, p6); }
+static BOOL GET_CLOSEST_MAJOR_VEHICLE_NODE(float x, float y, float z, Vector3* outPosition, float unknown1, float unknown2) { return invoke<BOOL>(0xE6F7D0, x, y, z, outPosition, unknown1, unknown2); }
+static BOOL GET_CLOSEST_VEHICLE_NODE_WITH_HEADING(float x, float y, float z, Vector3* outPosition, float* outHeading, int nodeType, float p6, float p7) { return invoke<BOOL>(0xE6F6F0, x, y, z, outPosition, outHeading, nodeType, p6, p7); }
+static BOOL GET_NTH_CLOSEST_VEHICLE_NODE(float x, float y, float z, int nthClosest, Vector3* outPosition, int nodeFlags, float unknown1, float unknown2) { return invoke<BOOL>(0xE6F990, x, y, z, nthClosest, outPosition, nodeFlags, unknown1, unknown2); }
 static int GET_NTH_CLOSEST_VEHICLE_NODE_ID(float x, float y, float z, int nth, int nodeFlags, float p5, float p6) { return invoke<int>(0xE6F990, x, y, z, nth, nodeFlags, p5, p6); }
-static BOOL GET_NTH_CLOSEST_VEHICLE_NODE_WITH_HEADING(float x, float y, float z, int nthClosest, vector3* outPosition, float* outHeading, int* outNumLanes, int nodeFlags, float unknown3, float unknown4) { return invoke<BOOL>(0xE6F990, x, y, z, nthClosest, outPosition, outHeading, outNumLanes, nodeFlags, unknown3, unknown4); }
-static int GET_NTH_CLOSEST_VEHICLE_NODE_ID_WITH_HEADING(float x, float y, float z, int nthClosest, vector3* outPosition, float* outHeading, int nodeFlags, float p7, float p8) { return invoke<int>(0xE6F990, x, y, z, nthClosest, outPosition, outHeading, nodeFlags, p7, p8); }
-static BOOL GET_NTH_CLOSEST_VEHICLE_NODE_FAVOUR_DIRECTION(float x, float y, float z, float desiredX, float desiredY, float desiredZ, int nthClosest, vector3* outPosition, float* outHeading, int nodeFlags, float p10, float p11) { return invoke<BOOL>(0xE6F990, x, y, z, desiredX, desiredY, desiredZ, nthClosest, outPosition, outHeading, nodeFlags, p10, p11); }
+static BOOL GET_NTH_CLOSEST_VEHICLE_NODE_WITH_HEADING(float x, float y, float z, int nthClosest, Vector3* outPosition, float* outHeading, int* outNumLanes, int nodeFlags, float unknown3, float unknown4) { return invoke<BOOL>(0xE6F990, x, y, z, nthClosest, outPosition, outHeading, outNumLanes, nodeFlags, unknown3, unknown4); }
+static int GET_NTH_CLOSEST_VEHICLE_NODE_ID_WITH_HEADING(float x, float y, float z, int nthClosest, Vector3* outPosition, float* outHeading, int nodeFlags, float p7, float p8) { return invoke<int>(0xE6F990, x, y, z, nthClosest, outPosition, outHeading, nodeFlags, p7, p8); }
+static BOOL GET_NTH_CLOSEST_VEHICLE_NODE_FAVOUR_DIRECTION(float x, float y, float z, float desiredX, float desiredY, float desiredZ, int nthClosest, Vector3* outPosition, float* outHeading, int nodeFlags, float p10, float p11) { return invoke<BOOL>(0xE6F990, x, y, z, desiredX, desiredY, desiredZ, nthClosest, outPosition, outHeading, nodeFlags, p10, p11); }
 static BOOL GET_VEHICLE_NODE_PROPERTIES(float x, float y, float z, int* density, int* flags) { return invoke<BOOL>(0xE6FDD0, x, y, z, density, flags); }
 static BOOL IS_VEHICLE_NODE_ID_VALID(int vehicleNodeId) { return invoke<BOOL>(0xE6FE00, vehicleNodeId); }
-static void GET_VEHICLE_NODE_POSITION(int nodeId, vector3* outPosition) { invoke<Void>(0xE6FE20, nodeId, outPosition); }
+static void GET_VEHICLE_NODE_POSITION(int nodeId, Vector3* outPosition) { invoke<Void>(0xE6FE20, nodeId, outPosition); }
 static BOOL GET_VEHICLE_NODE_IS_GPS_ALLOWED(int nodeID) { return invoke<BOOL>(0xE6FF00, nodeID); }
 static BOOL GET_VEHICLE_NODE_IS_SWITCHED_OFF(int nodeID) { return invoke<BOOL>(0xE6FF50, nodeID); }
-static BOOL GET_CLOSEST_ROAD(float x, float y, float z, float p3, int p4, vector3* p5, vector3* p6, Any* p7, Any* p8, float* p9, BOOL p10) { return invoke<BOOL>(0xE6FFA0, x, y, z, p3, p4, p5, p6, p7, p8, p9, p10); }
+static BOOL GET_CLOSEST_ROAD(float x, float y, float z, float p3, int p4, Vector3* p5, Vector3* p6, Any* p7, Any* p8, float* p9, BOOL p10) { return invoke<BOOL>(0xE6FFA0, x, y, z, p3, p4, p5, p6, p7, p8, p9, p10); }
 static BOOL LOAD_ALL_PATH_NODES(BOOL set) { return invoke<BOOL>(0xE70080, set); }
 static void SET_ALLOW_STREAM_PROLOGUE_NODES(BOOL toggle) { invoke<Void>(0xE700F0, toggle); }
 static void SET_ALLOW_STREAM_HEIST_ISLAND_NODES(int type) { invoke<Void>(0xE70110, type); }
@@ -3760,17 +3762,17 @@ static void SET_ROADS_BACK_TO_ORIGINAL_IN_ANGLED_AREA(float x1, float y1, float 
 static void SET_AMBIENT_PED_RANGE_MULTIPLIER_THIS_FRAME(float multiplier) { invoke<Void>(0xE70260, multiplier); }
 static void ADJUST_AMBIENT_PED_SPAWN_DENSITIES_THIS_FRAME(Any p0, Any p1, Any p2, Any p3, Any p4, Any p5, Any p6) { invoke<Void>(0xE70270, p0, p1, p2, p3, p4, p5, p6); }
 static void SET_PED_PATHS_BACK_TO_ORIGINAL(float x1, float y1, float z1, float x2, float y2, float z2, Any p6) { invoke<Void>(0xE70310, x1, y1, z1, x2, y2, z2, p6); }
-static BOOL GET_RANDOM_VEHICLE_NODE(float x, float y, float z, float radius, BOOL p4, BOOL p5, BOOL p6, vector3* outPosition, int* nodeId) { return invoke<BOOL>(0xE703C0, x, y, z, radius, p4, p5, p6, outPosition, nodeId); }
+static BOOL GET_RANDOM_VEHICLE_NODE(float x, float y, float z, float radius, BOOL p4, BOOL p5, BOOL p6, Vector3* outPosition, int* nodeId) { return invoke<BOOL>(0xE703C0, x, y, z, radius, p4, p5, p6, outPosition, nodeId); }
 static void GET_STREET_NAME_AT_COORD(float x, float y, float z, Hash* streetName, Hash* crossingRoad) { invoke<Void>(0xE705B0, x, y, z, streetName, crossingRoad); }
 static int GENERATE_DIRECTIONS_TO_COORD(float x, float y, float z, BOOL p3, int* direction, float* p5, float* distToNxJunction) { return invoke<int>(0xE70640, x, y, z, p3, direction, p5, distToNxJunction); }
 static void SET_IGNORE_NO_GPS_FLAG(BOOL toggle) { invoke<Void>(0xE706A0, toggle); }
 static void SET_IGNORE_NO_GPS_FLAG_UNTIL_FIRST_NORMAL_NODE(BOOL toggle) { invoke<Void>(0xE706A0, toggle); }
 static void SET_GPS_DISABLED_ZONE(float x1, float y1, float z1, float x2, float y2, float z3) { invoke<Void>(0xE706E0, x1, y1, z1, x2, y2, z3); }
 static int GET_GPS_BLIP_ROUTE_LENGTH() { return invoke<int>(0xE707A0); }
-static BOOL GET_POS_ALONG_GPS_TYPE_ROUTE(vector3* result, BOOL p1, float p2, int p3) { return invoke<BOOL>(0xE707D0, result, p1, p2, p3); }
+static BOOL GET_POS_ALONG_GPS_TYPE_ROUTE(Vector3* result, BOOL p1, float p2, int p3) { return invoke<BOOL>(0xE707D0, result, p1, p2, p3); }
 static BOOL GET_GPS_BLIP_ROUTE_FOUND() { return invoke<BOOL>(0xE708C0); }
-static BOOL GET_ROAD_BOUNDARY_USING_HEADING(float x, float y, float z, float heading, vector3* outPosition) { return invoke<BOOL>(0xE708F0, x, y, z, heading, outPosition); }
-static BOOL GET_POSITION_BY_SIDE_OF_ROAD(float x, float y, float z, int p3, vector3* outPosition) { return invoke<BOOL>(0xE70960, x, y, z, p3, outPosition); }
+static BOOL GET_ROAD_BOUNDARY_USING_HEADING(float x, float y, float z, float heading, Vector3* outPosition) { return invoke<BOOL>(0xE708F0, x, y, z, heading, outPosition); }
+static BOOL GET_POSITION_BY_SIDE_OF_ROAD(float x, float y, float z, int p3, Vector3* outPosition) { return invoke<BOOL>(0xE70960, x, y, z, p3, outPosition); }
 static BOOL IS_POINT_ON_ROAD(float x, float y, float z, Vehicle vehicle) { return invoke<BOOL>(0xE70A00, x, y, z, vehicle); }
 static int GET_NEXT_GPS_DISABLED_ZONE_INDEX() { return invoke<int>(0xE70AB0); }
 static void SET_GPS_DISABLED_ZONE_AT_INDEX(float x1, float y1, float z1, float x2, float y2, float z2, int index) { invoke<Void>(0xE706E0, x1, y1, z1, x2, y2, z2, index); }
@@ -3863,7 +3865,7 @@ static BOOL IS_PED_SITTING_IN_ANY_VEHICLE(Ped ped) { return invoke<BOOL>(0xE913F
 static BOOL IS_PED_ON_FOOT(Ped ped) { return invoke<BOOL>(0xE91480, ped); }
 static BOOL IS_PED_ON_ANY_BIKE(Ped ped) { return invoke<BOOL>(0xE914B0, ped); }
 static BOOL IS_PED_PLANTING_BOMB(Ped ped) { return invoke<BOOL>(0xE91520, ped); }
-static vector3 GET_DEAD_PED_PICKUP_COORDS(Ped ped, float p1, float p2) { return invoke<vector3>(0xE91590, ped, p1, p2); }
+static Vector3 GET_DEAD_PED_PICKUP_COORDS(Ped ped, float p1, float p2) { return invoke<Vector3>(0xE91590, ped, p1, p2); }
 static BOOL IS_PED_IN_ANY_BOAT(Ped ped) { return invoke<BOOL>(0xE91600, ped); }
 static BOOL IS_PED_IN_ANY_SUB(Ped ped) { return invoke<BOOL>(0xE91670, ped); }
 static BOOL IS_PED_IN_ANY_HELI(Ped ped) { return invoke<BOOL>(0xE916E0, ped); }
@@ -4051,8 +4053,8 @@ static void CLEAR_PED_ALTERNATE_WALK_ANIM(Ped ped, float p1) { invoke<Void>(0xE9
 static void SET_PED_ALTERNATE_MOVEMENT_ANIM(Ped ped, int stance, const char* animDictionary, const char* animationName, float p4, BOOL p5) { invoke<Void>(0xE95A20, ped, stance, animDictionary, animationName, p4, p5); }
 static void CLEAR_PED_ALTERNATE_MOVEMENT_ANIM(Ped ped, int stance, float p2) { invoke<Void>(0xE95A50, ped, stance, p2); }
 static void SET_PED_GESTURE_GROUP(Ped ped, const char* animGroupGesture) { invoke<Void>(0xE95B00, ped, animGroupGesture); }
-static vector3 GET_ANIM_INITIAL_OFFSET_POSITION(const char* animDict, const char* animName, float x, float y, float z, float xRot, float yRot, float zRot, float p8, int p9) { return invoke<vector3>(0xE95B90, animDict, animName, x, y, z, xRot, yRot, zRot, p8, p9); }
-static vector3 GET_ANIM_INITIAL_OFFSET_ROTATION(const char* animDict, const char* animName, float x, float y, float z, float xRot, float yRot, float zRot, float p8, int p9) { return invoke<vector3>(0xE95CA0, animDict, animName, x, y, z, xRot, yRot, zRot, p8, p9); }
+static Vector3 GET_ANIM_INITIAL_OFFSET_POSITION(const char* animDict, const char* animName, float x, float y, float z, float xRot, float yRot, float zRot, float p8, int p9) { return invoke<Vector3>(0xE95B90, animDict, animName, x, y, z, xRot, yRot, zRot, p8, p9); }
+static Vector3 GET_ANIM_INITIAL_OFFSET_ROTATION(const char* animDict, const char* animName, float x, float y, float z, float xRot, float yRot, float zRot, float p8, int p9) { return invoke<Vector3>(0xE95CA0, animDict, animName, x, y, z, xRot, yRot, zRot, p8, p9); }
 static int GET_PED_DRAWABLE_VARIATION(Ped ped, int componentId) { return invoke<int>(0xE95DB0, ped, componentId); }
 static int GET_NUMBER_OF_PED_DRAWABLE_VARIATIONS(Ped ped, int componentId) { return invoke<int>(0xE95E20, ped, componentId); }
 static int GET_PED_TEXTURE_VARIATION(Ped ped, int componentId) { return invoke<int>(0xE95E50, ped, componentId); }
@@ -4107,7 +4109,7 @@ static int SET_PED_PRELOAD_PROP_DATA(Ped ped, int componentId, int drawableId, i
 static BOOL HAS_PED_PRELOAD_PROP_DATA_FINISHED(Ped ped) { return invoke<BOOL>(0xE97340, ped); }
 static void RELEASE_PED_PRELOAD_PROP_DATA(Ped ped) { invoke<Void>(0xE973A0, ped); }
 static int GET_PED_PROP_INDEX(Ped ped, int componentId, Any p2) { return invoke<int>(0xE973F0, ped, componentId, p2); }
-static void SET_PED_PROP_INDEX(Ped ped, int componentId, int drawableId, int TextureId, BOOL attach, Any p5) { invoke<Void>(0xE97450, ped, componentId, drawableId, TextureId, attach, p5); }
+static void SET_PED_PROP_INDEX(Ped ped, int componentId, int drawableId, int TextureId, BOOL attach) { invoke<Void>(0xE97450, ped, componentId, drawableId, TextureId, attach); }
 static void KNOCK_OFF_PED_PROP(Ped ped, BOOL p1, BOOL p2, BOOL p3, BOOL p4) { invoke<Void>(0xE97480, ped, p1, p2, p3, p4); }
 static void CLEAR_PED_PROP(Ped ped, int propId, Any p2) { invoke<Void>(0xE97520, ped, propId, p2); }
 static void CLEAR_ALL_PED_PROPS(Ped ped, Any p1) { invoke<Void>(0xE97580, ped, p1); }
@@ -4149,14 +4151,14 @@ static void SET_PED_DEFENSIVE_SPHERE_ATTACHED_TO_VEHICLE(Ped ped, Vehicle target
 static void SET_PED_DEFENSIVE_AREA_ATTACHED_TO_PED(Ped ped, Ped attachPed, float p2, float p3, float p4, float p5, float p6, float p7, float p8, BOOL p9, BOOL p10) { invoke<Void>(0xE98450, ped, attachPed, p2, p3, p4, p5, p6, p7, p8, p9, p10); }
 static void SET_PED_DEFENSIVE_AREA_DIRECTION(Ped ped, float p1, float p2, float p3, BOOL p4) { invoke<Void>(0xE98490, ped, p1, p2, p3, p4); }
 static void REMOVE_PED_DEFENSIVE_AREA(Ped ped, BOOL toggle) { invoke<Void>(0xE98550, ped, toggle); }
-static vector3 GET_PED_DEFENSIVE_AREA_POSITION(Ped ped, BOOL p1) { return invoke<vector3>(0xE985B0, ped, p1); }
+static Vector3 GET_PED_DEFENSIVE_AREA_POSITION(Ped ped, BOOL p1) { return invoke<Vector3>(0xE985B0, ped, p1); }
 static BOOL IS_PED_DEFENSIVE_AREA_ACTIVE(Ped ped, BOOL p1) { return invoke<BOOL>(0xE98620, ped, p1); }
 static void SET_PED_PREFERRED_COVER_SET(Ped ped, Any itemSet) { invoke<Void>(0xE986A0, ped, itemSet); }
 static void REMOVE_PED_PREFERRED_COVER_SET(Ped ped) { invoke<Void>(0xE986F0, ped); }
 static void REVIVE_INJURED_PED(Ped ped) { invoke<Void>(0xE98740, ped); }
 static void RESURRECT_PED(Ped ped) { invoke<Void>(0xE987D0, ped); }
 static void SET_PED_NAME_DEBUG(Ped ped, const char* name) { invoke<Void>(0xE98870, ped, name); }
-static vector3 GET_PED_EXTRACTED_DISPLACEMENT(Ped ped, BOOL worldSpace) { return invoke<vector3>(0xE98880, ped, worldSpace); }
+static Vector3 GET_PED_EXTRACTED_DISPLACEMENT(Ped ped, BOOL worldSpace) { return invoke<Vector3>(0xE98880, ped, worldSpace); }
 static void SET_PED_DIES_WHEN_INJURED(Ped ped, BOOL toggle) { invoke<Void>(0xE98960, ped, toggle); }
 static void SET_PED_ENABLE_WEAPON_BLOCKING(Ped ped, BOOL toggle) { invoke<Void>(0xE989D0, ped, toggle); }
 static void SPECIAL_FUNCTION_DO_NOT_USE(Ped ped, BOOL p1) { invoke<Void>(0xE98A30, ped, p1); }
@@ -4185,7 +4187,7 @@ static int GET_PED_DECORATION_ZONE_FROM_HASHES(Hash collection, Hash overlay) { 
 static void CLEAR_PED_DECORATIONS(Ped ped) { invoke<Void>(0xE99790, ped); }
 static void CLEAR_PED_DECORATIONS_LEAVE_SCARS(Ped ped) { invoke<Void>(0xE99790, ped); }
 static BOOL WAS_PED_SKELETON_UPDATED(Ped ped) { return invoke<BOOL>(0xE99860, ped); }
-static vector3 GET_PED_BONE_COORDS(Ped ped, int boneId, float offsetX, float offsetY, float offsetZ) { return invoke<vector3>(0xE998A0, ped, boneId, offsetX, offsetY, offsetZ); }
+static Vector3 GET_PED_BONE_COORDS(Ped ped, int boneId, float offsetX, float offsetY, float offsetZ) { return invoke<Vector3>(0xE998A0, ped, boneId, offsetX, offsetY, offsetZ); }
 static void CREATE_NM_MESSAGE(BOOL startImmediately, int messageId) { invoke<Void>(0xE99910, startImmediately, messageId); }
 static void GIVE_PED_NM_MESSAGE(Ped ped) { invoke<Void>(0xE99980, ped); }
 static int ADD_SCENARIO_BLOCKING_AREA(float x1, float y1, float z1, float x2, float y2, float z2, BOOL p6, BOOL p7, BOOL p8, BOOL p9) { return invoke<int>(0xE99990, x1, y1, z1, x2, y2, z2, p6, p7, p8, p9); }
@@ -4419,8 +4421,8 @@ static void ROPE_SET_UPDATE_PINVERTS(int ropeId) { invoke<Void>(0xEA0C10, ropeId
 static void ROPE_SET_UPDATE_ORDER(int ropeId, Any p1) { invoke<Void>(0xEA0C50, ropeId, p1); }
 static void ROPE_SET_SMOOTH_REELIN(int ropeId, BOOL p1) { invoke<Void>(0xEA0C90, ropeId, p1); }
 static BOOL IS_ROPE_ATTACHED_AT_BOTH_ENDS(int* ropeId) { return invoke<BOOL>(0xEA0CF0, ropeId); }
-static vector3 GET_ROPE_LAST_VERTEX_COORD(int ropeId) { return invoke<vector3>(0xEA0D40, ropeId); }
-static vector3 GET_ROPE_VERTEX_COORD(int ropeId, int vertex) { return invoke<vector3>(0xEA0DD0, ropeId, vertex); }
+static Vector3 GET_ROPE_LAST_VERTEX_COORD(int ropeId) { return invoke<Vector3>(0xEA0D40, ropeId); }
+static Vector3 GET_ROPE_VERTEX_COORD(int ropeId, int vertex) { return invoke<Vector3>(0xEA0DD0, ropeId, vertex); }
 static void START_ROPE_WINDING(int ropeId) { invoke<Void>(0xEA0E90, ropeId); }
 static void STOP_ROPE_WINDING(int ropeId) { invoke<Void>(0xEA0ED0, ropeId); }
 static void START_ROPE_UNWINDING_FRONT(int ropeId) { invoke<Void>(0xEA0F00, ropeId); }
@@ -4440,7 +4442,7 @@ static void APPLY_IMPULSE_TO_CLOTH(float posX, float posY, float posZ, float vec
 static void SET_DAMPING(Entity entity, int vertex, float value) { invoke<Void>(0xEA1370, entity, vertex, value); }
 static void ACTIVATE_PHYSICS(Entity entity) { invoke<Void>(0xEA14F0, entity); }
 static void SET_CGOFFSET(Entity entity, float x, float y, float z) { invoke<Void>(0xEA1540, entity, x, y, z); }
-static vector3 GET_CGOFFSET(Entity entity) { return invoke<vector3>(0xEA1550, entity); }
+static Vector3 GET_CGOFFSET(Entity entity) { return invoke<Vector3>(0xEA1550, entity); }
 static void SET_CG_AT_BOUNDCENTER(Entity entity) { invoke<Void>(0xEA15F0, entity); }
 static void BREAK_ENTITY_GLASS(Entity entity, float p1, float p2, float p3, float p4, float p5, float p6, float p7, float p8, Any p9, BOOL p10) { invoke<Void>(0xEA16D0, entity, p1, p2, p3, p4, p5, p6, p7, p8, p9, p10); }
 static BOOL GET_IS_ENTITY_A_FRAG(Object object) { return invoke<BOOL>(0xEA1700, object); }
@@ -4461,8 +4463,8 @@ static void SET_PLAYER_TEAM(Player player, int team) { invoke<Void>(0xEA94B0, pl
 static int GET_NUMBER_OF_PLAYERS_IN_TEAM(int team) { return invoke<int>(0xEA9440, team); }
 static char* GET_PLAYER_NAME(Player player) { return invoke<char*>(0xEA95B0, player); }
 static float GET_WANTED_LEVEL_RADIUS(Player player) { return invoke<float>(0xEA9630, player); }
-static vector3 GET_PLAYER_WANTED_CENTRE_POSITION(Player player) { return invoke<vector3>(0xEA9660, player); }
-static void SET_PLAYER_WANTED_CENTRE_POSITION(Player player, vector3* position, BOOL p2, BOOL p3) { invoke<Void>(0xEA9700, player, position, p2, p3); }
+static Vector3 GET_PLAYER_WANTED_CENTRE_POSITION(Player player) { return invoke<Vector3>(0xEA9660, player); }
+static void SET_PLAYER_WANTED_CENTRE_POSITION(Player player, Vector3* position, BOOL p2, BOOL p3) { invoke<Void>(0xEA9700, player, position, p2, p3); }
 static int GET_WANTED_LEVEL_THRESHOLD(int wantedLevel) { return invoke<int>(0xEA9780, wantedLevel); }
 static void SET_PLAYER_WANTED_LEVEL(Player player, int wantedLevel, BOOL disableNoMission) { invoke<Void>(0xEA97A0, player, wantedLevel, disableNoMission); }
 static void SET_PLAYER_WANTED_LEVEL_NO_DROP(Player player, int wantedLevel, BOOL p2) { invoke<Void>(0xEA97A0, player, wantedLevel, p2); }
@@ -4768,9 +4770,9 @@ static int START_SHAPE_TEST_BOX(float x, float y, float z, float dimX, float dim
 static int START_SHAPE_TEST_BOUND(Entity entity, int flags1, int flags2) { return invoke<int>(0xEB3360, entity, flags1, flags2); }
 static int START_SHAPE_TEST_CAPSULE(float x1, float y1, float z1, float x2, float y2, float z2, float radius, int flags, Entity entity, int p9) { return invoke<int>(0xEB3390, x1, y1, z1, x2, y2, z2, radius, flags, entity, p9); }
 static int START_SHAPE_TEST_SWEPT_SPHERE(float x1, float y1, float z1, float x2, float y2, float z2, float radius, int flags, Entity entity, Any p9) { return invoke<int>(0xEB33D0, x1, y1, z1, x2, y2, z2, radius, flags, entity, p9); }
-static int START_SHAPE_TEST_MOUSE_CURSOR_LOS_PROBE(vector3* pVec1, vector3* pVec2, int flag, Entity entity, int flag2) { return invoke<int>(0xEB3410, pVec1, pVec2, flag, entity, flag2); }
-static int GET_SHAPE_TEST_RESULT(int shapeTestHandle, BOOL* hit, vector3* endCoords, vector3* surfaceNormal, Entity* entityHit) { return invoke<int>(0xEB34B0, shapeTestHandle, hit, endCoords, surfaceNormal, entityHit); }
-static int GET_SHAPE_TEST_RESULT_INCLUDING_MATERIAL(int shapeTestHandle, BOOL* hit, vector3* endCoords, vector3* surfaceNormal, Hash* materialHash, Entity* entityHit) { return invoke<int>(0xEB34B0, shapeTestHandle, hit, endCoords, surfaceNormal, materialHash, entityHit); }
+static int START_SHAPE_TEST_MOUSE_CURSOR_LOS_PROBE(Vector3* pVec1, Vector3* pVec2, int flag, Entity entity, int flag2) { return invoke<int>(0xEB3410, pVec1, pVec2, flag, entity, flag2); }
+static int GET_SHAPE_TEST_RESULT(int shapeTestHandle, BOOL* hit, Vector3* endCoords, Vector3* surfaceNormal, Entity* entityHit) { return invoke<int>(0xEB34B0, shapeTestHandle, hit, endCoords, surfaceNormal, entityHit); }
+static int GET_SHAPE_TEST_RESULT_INCLUDING_MATERIAL(int shapeTestHandle, BOOL* hit, Vector3* endCoords, Vector3* surfaceNormal, Hash* materialHash, Entity* entityHit) { return invoke<int>(0xEB34B0, shapeTestHandle, hit, endCoords, surfaceNormal, materialHash, entityHit); }
 static void RELEASE_SCRIPT_GUID_FROM_ENTITY(Entity entityHit) { invoke<Void>(0xEB3610, entityHit); }
 static int SC_INBOX_GET_TOTAL_NUM_MESSAGES() { return invoke<int>(0xEB5810); }
 static Hash SC_INBOX_GET_MESSAGE_TYPE_AT_INDEX(int msgIndex) { return invoke<Hash>(0xEB5830, msgIndex); }
@@ -5439,7 +5441,7 @@ static void TASK_PED_SLIDE_TO_COORD_HDG_RATE(Ped ped, float x, float y, float z,
 static ScrHandle ADD_COVER_POINT(float x, float y, float z, float direction, int usage, int height, int arc, BOOL isPriority) { return invoke<ScrHandle>(0xEF4BA0, x, y, z, direction, usage, height, arc, isPriority); }
 static void REMOVE_COVER_POINT(ScrHandle coverpoint) { invoke<Void>(0xEF4C50, coverpoint); }
 static BOOL DOES_SCRIPTED_COVER_POINT_EXIST_AT_COORDS(float x, float y, float z) { return invoke<BOOL>(0xEF4C90, x, y, z); }
-static vector3 GET_SCRIPTED_COVER_POINT_COORDS(ScrHandle coverpoint) { return invoke<vector3>(0xEF4D20, coverpoint); }
+static Vector3 GET_SCRIPTED_COVER_POINT_COORDS(ScrHandle coverpoint) { return invoke<Vector3>(0xEF4D20, coverpoint); }
 static void ADD_SCRIPTED_COVER_AREA(float x, float y, float z, float radius) { invoke<Void>(0xEF4DF0, x, y, z, radius); }
 static void TASK_COMBAT_PED(Ped ped, Ped targetPed, int combatFlags, int threatResponseFlags) { invoke<Void>(0xEF4EB0, ped, targetPed, combatFlags, threatResponseFlags); }
 static void TASK_COMBAT_PED_TIMED(Ped ped, Ped target, int time, int flags) { invoke<Void>(0xEF4EB0, ped, target, time, flags); }
@@ -5521,7 +5523,7 @@ static void REQUEST_WAYPOINT_RECORDING(const char* name) { invoke<Void>(0xEF67C0
 static BOOL GET_IS_WAYPOINT_RECORDING_LOADED(const char* name) { return invoke<BOOL>(0xEF6800, name); }
 static void REMOVE_WAYPOINT_RECORDING(const char* name) { invoke<Void>(0xEF6840, name); }
 static BOOL WAYPOINT_RECORDING_GET_NUM_POINTS(const char* name, int* points) { return invoke<BOOL>(0xEF6880, name, points); }
-static BOOL WAYPOINT_RECORDING_GET_COORD(const char* name, int point, vector3* coord) { return invoke<BOOL>(0xEF68E0, name, point, coord); }
+static BOOL WAYPOINT_RECORDING_GET_COORD(const char* name, int point, Vector3* coord) { return invoke<BOOL>(0xEF68E0, name, point, coord); }
 static float WAYPOINT_RECORDING_GET_SPEED_AT_POINT(const char* name, int point) { return invoke<float>(0xEF6950, name, point); }
 static BOOL WAYPOINT_RECORDING_GET_CLOSEST_WAYPOINT(const char* name, float x, float y, float z, int* point) { return invoke<BOOL>(0xEF69F0, name, x, y, z, point); }
 static void TASK_FOLLOW_WAYPOINT_RECORDING(Ped ped, const char* name, int p2, int p3, int p4) { invoke<Void>(0xEF6AA0, ped, name, p2, p3, p4); }
@@ -5771,10 +5773,10 @@ static int GET_VEHICLE_RECORDING_ID(int recording, const char* script) { return 
 static void REQUEST_VEHICLE_RECORDING(int recording, const char* script) { invoke<Void>(0xF1F6D0, recording, script); }
 static BOOL HAS_VEHICLE_RECORDING_BEEN_LOADED(int recording, const char* script) { return invoke<BOOL>(0xF1F750, recording, script); }
 static void REMOVE_VEHICLE_RECORDING(int recording, const char* script) { invoke<Void>(0xF1F790, recording, script); }
-static vector3 GET_POSITION_OF_VEHICLE_RECORDING_ID_AT_TIME(int id, float time) { return invoke<vector3>(0xF1F7E0, id, time); }
-static vector3 GET_POSITION_OF_VEHICLE_RECORDING_AT_TIME(int recording, float time, const char* script) { return invoke<vector3>(0xF1F870, recording, time, script); }
-static vector3 GET_ROTATION_OF_VEHICLE_RECORDING_ID_AT_TIME(int id, float time) { return invoke<vector3>(0xF1F920, id, time); }
-static vector3 GET_ROTATION_OF_VEHICLE_RECORDING_AT_TIME(int recording, float time, const char* script) { return invoke<vector3>(0xF1F9B0, recording, time, script); }
+static Vector3 GET_POSITION_OF_VEHICLE_RECORDING_ID_AT_TIME(int id, float time) { return invoke<Vector3>(0xF1F7E0, id, time); }
+static Vector3 GET_POSITION_OF_VEHICLE_RECORDING_AT_TIME(int recording, float time, const char* script) { return invoke<Vector3>(0xF1F870, recording, time, script); }
+static Vector3 GET_ROTATION_OF_VEHICLE_RECORDING_ID_AT_TIME(int id, float time) { return invoke<Vector3>(0xF1F920, id, time); }
+static Vector3 GET_ROTATION_OF_VEHICLE_RECORDING_AT_TIME(int recording, float time, const char* script) { return invoke<Vector3>(0xF1F9B0, recording, time, script); }
 static float GET_TOTAL_DURATION_OF_VEHICLE_RECORDING_ID(int id) { return invoke<float>(0xF1FA60, id); }
 static float GET_TOTAL_DURATION_OF_VEHICLE_RECORDING(int recording, const char* script) { return invoke<float>(0xF1FA90, recording, script); }
 static float GET_POSITION_IN_RECORDING(Vehicle vehicle) { return invoke<float>(0xF1FAD0, vehicle); }
@@ -5924,7 +5926,7 @@ static void SET_VEHICLE_IN_CAR_MOD_SHOP(Vehicle vehicle, BOOL toggle) { invoke<V
 static void SET_VEHICLE_HAS_STRONG_AXLES(Vehicle vehicle, BOOL toggle) { invoke<Void>(0xF23910, vehicle, toggle); }
 static const char* GET_DISPLAY_NAME_FROM_VEHICLE_MODEL(Hash modelHash) { return invoke<const char*>(0xF239B0, modelHash); }
 static const char* GET_MAKE_NAME_FROM_VEHICLE_MODEL(Hash modelHash) { return invoke<const char*>(0xF23A30, modelHash); }
-static vector3 GET_VEHICLE_DEFORMATION_AT_POS(Vehicle vehicle, float offsetX, float offsetY, float offsetZ) { return invoke<vector3>(0xF23AB0, vehicle, offsetX, offsetY, offsetZ); }
+static Vector3 GET_VEHICLE_DEFORMATION_AT_POS(Vehicle vehicle, float offsetX, float offsetY, float offsetZ) { return invoke<Vector3>(0xF23AB0, vehicle, offsetX, offsetY, offsetZ); }
 static void SET_VEHICLE_LIVERY(Vehicle vehicle, int livery) { invoke<Void>(0xF23B80, vehicle, livery); }
 static int GET_VEHICLE_LIVERY(Vehicle vehicle) { return invoke<int>(0xF23BE0, vehicle); }
 static int GET_VEHICLE_LIVERY_COUNT(Vehicle vehicle) { return invoke<int>(0xF23BE0, vehicle); }
@@ -5974,7 +5976,7 @@ static void SET_VEHICLE_FLIGHT_NOZZLE_POSITION(Vehicle vehicle, float angleRatio
 static void SET_VEHICLE_FLIGHT_NOZZLE_POSITION_IMMEDIATE(Vehicle vehicle, float angle) { invoke<Void>(0xF24ED0, vehicle, angle); }
 static float GET_VEHICLE_FLIGHT_NOZZLE_POSITION(Vehicle plane) { return invoke<float>(0xF24FB0, plane); }
 static void SET_DISABLE_VERTICAL_FLIGHT_MODE_TRANSITION(Vehicle vehicle, BOOL toggle) { invoke<Void>(0xF25020, vehicle, toggle); }
-static BOOL GENERATE_VEHICLE_CREATION_POS_FROM_PATHS(vector3* outVec, Any p1, vector3* outVec1, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8) { return invoke<BOOL>(0xF25080, outVec, p1, outVec1, p3, p4, p5, p6, p7, p8); }
+static BOOL GENERATE_VEHICLE_CREATION_POS_FROM_PATHS(Vector3* outVec, Any p1, Vector3* outVec1, Any p3, Any p4, Any p5, Any p6, Any p7, Any p8) { return invoke<BOOL>(0xF25080, outVec, p1, outVec1, p3, p4, p5, p6, p7, p8); }
 static void SET_VEHICLE_BURNOUT(Vehicle vehicle, BOOL toggle) { invoke<Void>(0xF25170, vehicle, toggle); }
 static BOOL IS_VEHICLE_IN_BURNOUT(Vehicle vehicle) { return invoke<BOOL>(0xF251D0, vehicle); }
 static void SET_VEHICLE_REDUCE_GRIP(Vehicle vehicle, BOOL toggle) { invoke<Void>(0xF25240, vehicle, toggle); }
@@ -6019,7 +6021,7 @@ static BOOL IS_VEHICLE_SEARCHLIGHT_ON(Vehicle vehicle) { return invoke<BOOL>(0xF
 static void SET_VEHICLE_SEARCHLIGHT(Vehicle heli, BOOL toggle, BOOL canBeUsedByAI) { invoke<Void>(0xF26520, heli, toggle, canBeUsedByAI); }
 static BOOL DOES_VEHICLE_HAVE_SEARCHLIGHT(Vehicle vehicle) { return invoke<BOOL>(0xF26540, vehicle); }
 static BOOL IS_ENTRY_POINT_FOR_SEAT_CLEAR(Ped ped, Vehicle vehicle, int seatIndex, BOOL side, BOOL onEnter) { return invoke<BOOL>(0xF265F0, ped, vehicle, seatIndex, side, onEnter); }
-static vector3 GET_ENTRY_POINT_POSITION(Vehicle vehicle, int doorId) { return invoke<vector3>(0xF26630, vehicle, doorId); }
+static Vector3 GET_ENTRY_POINT_POSITION(Vehicle vehicle, int doorId) { return invoke<Vector3>(0xF26630, vehicle, doorId); }
 static BOOL CAN_SHUFFLE_SEAT(Vehicle vehicle, int seatIndex) { return invoke<BOOL>(0xF26720, vehicle, seatIndex); }
 static int GET_NUM_MOD_KITS(Vehicle vehicle) { return invoke<int>(0xF267D0, vehicle); }
 static void SET_VEHICLE_MOD_KIT(Vehicle vehicle, int modKit) { invoke<Void>(0xF26830, vehicle, modKit); }
@@ -6136,7 +6138,7 @@ static void ATTACH_ENTITY_TO_CARGOBOB(Any p0, Any p1, Any p2, Any p3, Any p4, An
 static void SET_CARGOBOB_FORCE_DONT_DETACH_VEHICLE(Vehicle cargobob, BOOL toggle) { invoke<Void>(0xF29950, cargobob, toggle); }
 static void SET_CARGOBOB_EXCLUDE_FROM_PICKUP_ENTITY(Any p0, Any p1) { invoke<Void>(0xF29970, p0, p1); }
 static BOOL CAN_CARGOBOB_PICK_UP_ENTITY(Any p0, Any p1) { return invoke<BOOL>(0xF29980, p0, p1); }
-static vector3 GET_ATTACHED_PICK_UP_HOOK_POSITION(Vehicle cargobob) { return invoke<vector3>(0xF299B0, cargobob); }
+static Vector3 GET_ATTACHED_PICK_UP_HOOK_POSITION(Vehicle cargobob) { return invoke<Vector3>(0xF299B0, cargobob); }
 static BOOL DOES_CARGOBOB_HAVE_PICK_UP_ROPE(Vehicle cargobob) { return invoke<BOOL>(0xF29B10, cargobob); }
 static void CREATE_PICK_UP_ROPE_FOR_CARGOBOB(Vehicle cargobob, int state) { invoke<Void>(0xF29BC0, cargobob, state); }
 static void REMOVE_PICK_UP_ROPE_FOR_CARGOBOB(Vehicle cargobob) { invoke<Void>(0xF29BD0, cargobob); }
@@ -6202,7 +6204,7 @@ static void SET_DISABLE_SUPERDUMMY(Vehicle vehicle, BOOL p1) { invoke<Void>(0xF2
 static void REQUEST_VEHICLE_DIAL(Vehicle vehicle) { invoke<Void>(0xF2B5C0, vehicle); }
 static float GET_VEHICLE_BODY_HEALTH(Vehicle vehicle) { return invoke<float>(0xF2B610, vehicle); }
 static void SET_VEHICLE_BODY_HEALTH(Vehicle vehicle, float value) { invoke<Void>(0xF2B670, vehicle, value); }
-static void GET_VEHICLE_SIZE(Vehicle vehicle, vector3* out1, vector3* out2) { invoke<Void>(0xF2B6F0, vehicle, out1, out2); }
+static void GET_VEHICLE_SIZE(Vehicle vehicle, Vector3* out1, Vector3* out2) { invoke<Void>(0xF2B6F0, vehicle, out1, out2); }
 static float GET_FAKE_SUSPENSION_LOWERING_AMOUNT(Vehicle vehicle) { return invoke<float>(0xF2B790, vehicle); }
 static void SET_CAR_HIGH_SPEED_BUMP_SEVERITY_MULTIPLIER(float multiplier) { invoke<Void>(0xF2B800, multiplier); }
 static int GET_NUMBER_OF_VEHICLE_DOORS(Vehicle vehicle) { return invoke<int>(0xF2B820, vehicle); }
@@ -6296,7 +6298,7 @@ static void SET_SPECIAL_FLIGHT_MODE_TARGET_RATIO(Vehicle vehicle, float targetRa
 static void SET_SPECIAL_FLIGHT_MODE_ALLOWED(Vehicle vehicle, BOOL toggle) { invoke<Void>(0xF2D900, vehicle, toggle); }
 static void SET_DISABLE_HOVER_MODE_FLIGHT(Vehicle vehicle, BOOL toggle) { invoke<Void>(0xF2D960, vehicle, toggle); }
 static BOOL GET_OUTRIGGERS_DEPLOYED(Vehicle vehicle) { return invoke<BOOL>(0xF2D9C0, vehicle); }
-static vector3 FIND_SPAWN_COORDINATES_FOR_HELI(Ped ped) { return invoke<vector3>(0xF2DA30, ped); }
+static Vector3 FIND_SPAWN_COORDINATES_FOR_HELI(Ped ped) { return invoke<Vector3>(0xF2DA30, ped); }
 static void SET_DEPLOY_FOLDING_WINGS(Vehicle vehicle, BOOL deploy, BOOL p2) { invoke<Void>(0xF2DAD0, vehicle, deploy, p2); }
 static BOOL ARE_FOLDING_WINGS_DEPLOYED(Vehicle vehicle) { return invoke<BOOL>(0xF2DB40, vehicle); }
 static void SET_DIP_STRAIGHT_DOWN_WHEN_CRASHING_PLANE(Vehicle vehicle, BOOL toggle) { invoke<Void>(0xF2DC50, vehicle, toggle); }
@@ -6335,7 +6337,7 @@ static void NETWORK_USE_HIGH_PRECISION_TRAIN_BLENDING(Vehicle vehicle, BOOL togg
 static void SET_CHECK_FOR_ENOUGH_ROOM_FOR_PED(Vehicle vehicle, BOOL p1) { invoke<Void>(0xF2ECA0, vehicle, p1); }
 static BOOL GET_WATER_HEIGHT(float x, float y, float z, float* height) { return invoke<BOOL>(0xF2F950, x, y, z, height); }
 static BOOL GET_WATER_HEIGHT_NO_WAVES(float x, float y, float z, float* height) { return invoke<BOOL>(0xF2F950, x, y, z, height); }
-static BOOL TEST_PROBE_AGAINST_WATER(float x1, float y1, float z1, float x2, float y2, float z2, vector3* result) { return invoke<BOOL>(0xF2FAF0, x1, y1, z1, x2, y2, z2, result); }
+static BOOL TEST_PROBE_AGAINST_WATER(float x1, float y1, float z1, float x2, float y2, float z2, Vector3* result) { return invoke<BOOL>(0xF2FAF0, x1, y1, z1, x2, y2, z2, result); }
 static int TEST_PROBE_AGAINST_ALL_WATER(float x1, float y1, float z1, float x2, float y2, float z2, int flags, float* waterHeight) { return invoke<int>(0xF2FB60, x1, y1, z1, x2, y2, z2, flags, waterHeight); }
 static int TEST_VERTICAL_PROBE_AGAINST_ALL_WATER(float x, float y, float z, int flags, float* waterHeight) { return invoke<int>(0xF2FC20, x, y, z, flags, waterHeight); }
 static void MODIFY_WATER(float x, float y, float radius, float height) { invoke<Void>(0xF2FD00, x, y, radius, height); }
@@ -6395,7 +6397,7 @@ static void SET_PED_AMMO_TO_DROP(Ped ped, int p1) { invoke<Void>(0xF38EA0, ped, 
 static void SET_PICKUP_AMMO_AMOUNT_SCALER(float p0) { invoke<Void>(0xF39B00, p0); }
 static Hash GET_PED_AMMO_TYPE_FROM_WEAPON(Ped ped, Hash weaponHash) { return invoke<Hash>(0xF39B20, ped, weaponHash); }
 static Hash GET_PED_ORIGINAL_AMMO_TYPE_FROM_WEAPON(Ped ped, Hash weaponHash) { return invoke<Hash>(0xF39B50, ped, weaponHash); }
-static BOOL GET_PED_LAST_WEAPON_IMPACT_COORD(Ped ped, vector3* coords) { return invoke<BOOL>(0xF39C00, ped, coords); }
+static BOOL GET_PED_LAST_WEAPON_IMPACT_COORD(Ped ped, Vector3* coords) { return invoke<BOOL>(0xF39C00, ped, coords); }
 static void SET_PED_GADGET(Ped ped, Hash gadgetHash, BOOL p2) { invoke<Void>(0xF39D00, ped, gadgetHash, p2); }
 static BOOL GET_IS_PED_GADGET_EQUIPPED(Ped ped, Hash gadgetHash) { return invoke<BOOL>(0xF39D20, ped, gadgetHash); }
 static Hash GET_SELECTED_PED_WEAPON(Ped ped) { return invoke<Hash>(0xF39D90, ped); }
